@@ -56,6 +56,6 @@ function escape_room_customize_partial_blogdescription() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function escape_room_customize_preview_js() {
-	wp_enqueue_script( 'escape-room-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), _S_VERSION, true );
+	wp_enqueue_script( 'escape-room-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), ESCAPE_ROOM_VERSION, true );
 }
 add_action( 'customize_preview_init', 'escape_room_customize_preview_js' );
