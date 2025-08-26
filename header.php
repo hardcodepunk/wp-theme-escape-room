@@ -1,59 +1,53 @@
-<?php
-/**
- * The header for our theme
- *
- * This is the template that displays all of the <head> section and everything up until <div id="content">
- *
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
- * @package Escape_Room
- */
-
-?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="profile" href="https://gmpg.org/xfn/11">
-
-	<?php wp_head(); ?>
+  <meta charset="<?php bloginfo('charset'); ?>">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="profile" href="https://gmpg.org/xfn/11">
+  <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class('bg-black text-white antialiased'); ?>>
 <?php wp_body_open(); ?>
+
+<header data-header class="fixed top-0 inset-x-0 z-50 transition-colors">
+  <!-- 3-column grid keeps logo dead-center no matter left/right width -->
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 grid grid-cols-3 items-center">
+    
+    <!-- Left: language / social (optional) -->
+    <div class="hidden md:flex items-center gap-4 text-xs uppercase tracking-wide opacity-80">
+      <a href="#" class="hover:opacity-100">EN</a><span>•</span>
+      <a href="#" class="hover:opacity-100">FR</a><span>•</span>
+      <a href="#" class="hover:opacity-100">NL</a>
+      <span class="mx-3 opacity-40">|</span>
+      <a href="#" aria-label="Instagram" class="hover:opacity-100">IG</a>
+    </div>
+
+    <!-- Center: cube logo -->
+	<div class="flex justify-center">
+	<a href="<?php echo esc_url( home_url('/') ); ?>" class="block">
+		<img
+		src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/logo.svg' ); ?>"
+		alt="<?php esc_attr_e('Logo', 'escape-room'); ?>"
+		class="logo-img transition-all duration-300 ease-in-out h-20 md:h-28"
+		/>
+	</a>
+	</div>
+
+    <!-- Right: primary menu -->
+    <nav class="flex justify-end">
+      <?php
+      wp_nav_menu([
+        'theme_location' => 'primary',
+        'container'      => false,
+        'menu_class'     => 'flex items-center gap-8 text-sm font-semibold tracking-wide uppercase',
+        'fallback_cb'    => false,
+      ]);
+      ?>
+    </nav>
+
+  </div>
+</header>
+
 <div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'escape-room' ); ?></a>
-
-	<header id="masthead" class="site-header">
-		<div class="site-branding">
-			<?php
-			the_custom_logo();
-			if ( is_front_page() && is_home() ) :
-				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<?php
-			else :
-				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php
-			endif;
-			$escape_room_description = get_bloginfo( 'description', 'display' );
-			if ( $escape_room_description || is_customize_preview() ) :
-				?>
-				<p class="site-description"><?php echo $escape_room_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-			<?php endif; ?>
-		</div><!-- .site-branding -->
-
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'escape-room' ); ?></button>
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'menu-1',
-					'menu_id'        => 'primary-menu',
-				)
-			);
-			?>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
+  <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'escape-room'); ?></a>

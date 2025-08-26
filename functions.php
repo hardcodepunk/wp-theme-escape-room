@@ -139,13 +139,28 @@ function escape_room_scripts() {
 	wp_enqueue_style( 'escape-room-style', get_stylesheet_uri(), array(), ESCAPE_ROOM_VERSION );
 	wp_style_add_data( 'escape-room-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'escape-room-navigation', get_template_directory_uri() . '/js/navigation.js', array(), ESCAPE_ROOM_VERSION, true );
+	wp_enqueue_script(
+		'escape-room-navigation',
+		get_template_directory_uri() . '/js/navigation.js',
+		array(),
+		ESCAPE_ROOM_VERSION,
+		true
+	);
+
+	wp_enqueue_script(
+		'escape-room-app',
+		get_template_directory_uri() . '/js/app.js',
+		array(),
+		ESCAPE_ROOM_VERSION,
+		true
+	);
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'escape_room_scripts' );
+
 
 /**
  * Implement the Custom Header feature.
