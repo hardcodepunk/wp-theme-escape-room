@@ -10,12 +10,12 @@
 <body <?php body_class('bg-black text-white antialiased'); ?>>
 <?php wp_body_open(); ?>
 
-<header data-header class="fixed top-0 inset-x-0 z-50 transition-colors">
+<header data-header class="fixed top-0 inset-x-0 z-50 transition-colors p-4">
   <!-- 3-column grid keeps logo dead-center no matter left/right width -->
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 grid grid-cols-3 items-center">
     
     <!-- Left: language / social (optional) -->
-    <div class="hidden md:flex items-center gap-4 text-xs uppercase tracking-wide opacity-80">
+    <div class="hidden md:flex items-center gap-4 text-xs uppercase font-light tracking-wide opacity-80">
       <a href="#" class="hover:opacity-100">EN</a><span>•</span>
       <a href="#" class="hover:opacity-100">FR</a><span>•</span>
       <a href="#" class="hover:opacity-100">NL</a>
@@ -40,7 +40,7 @@
       wp_nav_menu([
         'theme_location' => 'primary',
         'container'      => false,
-        'menu_class'     => 'flex items-center gap-8 text-sm font-semibold tracking-wide uppercase',
+        'menu_class'     => 'flex items-center gap-8 text-sm font-light tracking-wide uppercase',
         'fallback_cb'    => false,
       ]);
       ?>
