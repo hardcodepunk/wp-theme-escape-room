@@ -11,9 +11,50 @@
 }
 
 @layer components {
-  .logo-img { @apply h-20 md:h-28; }
-  .is-scrolled .logo-img { @apply h-12 md:h-16; }
-}
+    .logo-img {
+      @apply h-20 md:h-28; 
+    }
+    .is-scrolled .logo-img {
+      @apply h-12 md:h-16; 
+    }
+  
+    /* 3D outline button (front face + back face + right-side connectors) */
+    .btn-cube {
+        @apply relative inline-block px-10 py-3 uppercase tracking-widest font-thin text-white;
+        border: 1px solid #fff;                 /* front face */
+        transform-style: preserve-3d;
+    }
+
+    /* back face (offset up-left) */
+    .btn-cube::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid #fff;
+        transform: translate(12px, -12px);      /* depth */
+        pointer-events: none;
+    }
+
+    /* right side face (draws the connectors) */
+    .btn-cube::after {
+        content: "";
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        width: 12px;                             /* depth width */
+        height: 100%;
+        border-right: 1px solid #fff;            /* far edge */
+        border-top: 1px solid #fff;              /* top connector */
+        border-bottom: 1px solid #fff;           /* bottom connector */
+        transform: skewY(-20deg);                /* gives that isometric-ish look */
+        pointer-events: none;
+    }
+
+    /* subtle hover: shift the front face towards the back for a nicer feel */
+    .btn-cube:hover {
+        background: rgba(255,255,255,0.06);
+    }
+  }
 
 
 /*
