@@ -19,6 +19,8 @@ build/
 .cache/
 *.map
 
+.prettierrc
+
 vendor/
 composer.lock
 

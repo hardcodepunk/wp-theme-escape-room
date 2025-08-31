@@ -554,7 +554,8 @@ video {
   display: none;
 }
 
-html, body {
+html,
+  body {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
@@ -564,15 +565,25 @@ html, body {
 }
 
 body {
-  font-family: 'Lato', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 100;
+  font-family:
+      'Lato',
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif;
 }
 
-.main-navigation a, .menu a {
+.main-navigation a,
+  .menu a {
   text-decoration-line: none;
 }
 
-.main-navigation a:hover, .menu a:hover {
+.main-navigation a:hover,
+  .menu a:hover {
   text-decoration-line: underline;
 }
 
@@ -667,12 +678,24 @@ body {
   right: 0px;
 }
 
+.bottom-\[4\%\] {
+  bottom: 4%;
+}
+
+.left-1\/2 {
+  left: 50%;
+}
+
 .top-0 {
   top: 0px;
 }
 
 .z-10 {
   z-index: 10;
+}
+
+.z-20 {
+  z-index: 20;
 }
 
 .z-50 {
@@ -689,8 +712,8 @@ body {
   margin-right: auto;
 }
 
-.mt-12 {
-  margin-top: 3rem;
+.ml-4 {
+  margin-left: 1rem;
 }
 
 .mt-4 {
@@ -725,8 +748,8 @@ body {
   height: 5rem;
 }
 
-.h-\[120px\] {
-  height: 120px;
+.h-auto {
+  height: auto;
 }
 
 .h-full {
@@ -737,73 +760,30 @@ body {
   height: 100vh;
 }
 
-.h-\[140px\] {
-  height: 140px;
-}
-
-.h-\[200px\] {
-  height: 200px;
-}
-
-.h-\[240px\] {
-  height: 240px;
-}
-
-.h-\[220px\] {
-  height: 220px;
-}
-
-.h-\[320px\] {
-  height: 320px;
-}
-
-.h-auto {
-  height: auto;
-}
-
-.w-\[401px\] {
-  width: 401px;
-}
-
-.w-\[420px\] {
-  width: 420px;
+.w-\[290px\] {
+  width: 290px;
 }
 
 .w-full {
   width: 100%;
 }
 
-.w-\[300px\] {
-  width: 300px;
-}
-
-.w-\[320px\] {
-  width: 320px;
-}
-
 .max-w-7xl {
   max-width: 80rem;
 }
 
-.max-w-\[220px\] {
-  max-width: 220px;
-}
-
-.max-w-\[400px\] {
-  max-width: 400px;
-}
-
-.max-w-\[290px\] {
-  max-width: 290px;
-}
-
-.translate-x-\[-10\%\] {
-  --tw-translate-x: -10%;
+.-translate-x-1\/2 {
+  --tw-translate-x: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.translate-y-\[8\%\] {
-  --tw-translate-y: 8%;
+.translate-x-\[-8\%\] {
+  --tw-translate-x: -8%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-y-\[4\%\] {
+  --tw-translate-y: 4%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -825,10 +805,6 @@ body {
 
 .justify-center {
   justify-content: center;
-}
-
-.justify-between {
-  justify-content: space-between;
 }
 
 .gap-4 {
@@ -879,11 +855,6 @@ body {
   text-align: center;
 }
 
-.text-6xl {
-  font-size: 3.75rem;
-  line-height: 1;
-}
-
 .text-\[12px\] {
   font-size: 12px;
 }
@@ -903,8 +874,14 @@ body {
   line-height: 1rem;
 }
 
-.text-\[14px\] {
-  font-size: 14px;
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-8xl {
+  font-size: 6rem;
+  line-height: 1;
 }
 
 .font-light {
@@ -923,16 +900,16 @@ body {
   line-height: 1.25;
 }
 
+.tracking-\[0\.30em\] {
+  letter-spacing: 0.30em;
+}
+
 .tracking-wide {
   letter-spacing: 0.025em;
 }
 
 .tracking-widest {
   letter-spacing: 0.1em;
-}
-
-.tracking-\[0\.30em\] {
-  letter-spacing: 0.30em;
 }
 
 .text-white {
@@ -951,10 +928,6 @@ body {
 
 .opacity-80 {
   opacity: 0.8;
-}
-
-.outline {
-  outline-style: solid;
 }
 
 .blur {
@@ -1000,9 +973,9 @@ body {
 
   font-style: normal;
 
-  font-weight: 300;
+  font-weight: 100;
 
-  src: url('../fonts/lato/Lato-Light.woff2') format('woff2');
+  src: url('../fonts/lato/Lato-Thin.woff2') format('woff2');
 
   font-display: swap;
 }
@@ -1010,11 +983,11 @@ body {
 @font-face {
   font-family: 'Lato';
 
-  font-style: bold;
+  font-style: normal;
 
-  font-weight: 100;
+  font-weight: 300;
 
-  src: url('../fonts/lato/Lato-Thin.woff2') format('woff2');
+  src: url('../fonts/lato/Lato-Light.woff2') format('woff2');
 
   font-display: swap;
 }
@@ -1024,10 +997,6 @@ body {
 }
 
 @media (min-width: 640px) {
-  .sm\:w-\[360px\] {
-    width: 360px;
-  }
-
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -1042,10 +1011,6 @@ body {
   .md\:h-28 {
     height: 7rem;
   }
-
-  .md\:w-\[420px\] {
-    width: 420px;
-  }
 }
 
 @media (min-width: 1024px) {
@@ -1054,5 +1019,3 @@ body {
     padding-right: 2rem;
   }
 }
-  
-  
