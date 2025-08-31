@@ -787,6 +787,16 @@ body {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.translate-x-\[-10\%\] {
+  --tw-translate-x: -10%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-y-\[8\%\] {
+  --tw-translate-y: 8%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -990,6 +1000,68 @@ body {
   src: url('../fonts/lato/Lato-Light.woff2') format('woff2');
 
   font-display: swap;
+}
+
+.after\:absolute::after {
+  content: var(--tw-content);
+  position: absolute;
+}
+
+.after\:left-1\/2::after {
+  content: var(--tw-content);
+  left: 50%;
+}
+
+.after\:top-full::after {
+  content: var(--tw-content);
+  top: 100%;
+}
+
+.after\:top-\[80\%\]::after {
+  content: var(--tw-content);
+  top: 80%;
+}
+
+.after\:h-\[calc\(100\%-4\%\)\]::after {
+  content: var(--tw-content);
+  height: calc(100% - 4%);
+}
+
+.after\:h-\[calc\(100\%-85\%\)\]::after {
+  content: var(--tw-content);
+  height: calc(100% - 85%);
+}
+
+.after\:h-\[calc\(100\%-64\%\)\]::after {
+  content: var(--tw-content);
+  height: calc(100% - 64%);
+}
+
+.after\:w-px::after {
+  content: var(--tw-content);
+  width: 1px;
+}
+
+.after\:-translate-x-1\/2::after {
+  content: var(--tw-content);
+  --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.after\:bg-white::after {
+  content: var(--tw-content);
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.after\:opacity-60::after {
+  content: var(--tw-content);
+  opacity: 0.6;
+}
+
+.after\:content-\[\'\'\]::after {
+  --tw-content: '';
+  content: var(--tw-content);
 }
 
 .hover\:opacity-100:hover {
