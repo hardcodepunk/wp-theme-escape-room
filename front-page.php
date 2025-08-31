@@ -12,7 +12,7 @@
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white space-y-12">
       <div>
         <h1 class="leading-tight flex flex-col items-center font-thin uppercase text-8xl">Let me out</h1>
-        <p class="mt-4 text-lg text uppercase font-thin">Escape from our puzzle rooms in the heart of Brussels.</p>
+        <p class="mt-4 text-lg uppercase font-thin">Escape from our puzzle rooms in the heart of Brussels.</p>
       </div>
     </div>
 
@@ -34,6 +34,7 @@
     stroke-linejoin="round"
     vector-effect="non-scaling-stroke"
     preserveAspectRatio="xMidYMid meet"
+    aria-hidden="true"
   >
     <!-- FRONT -->
     <polygon points="40,40 260,140 260,240 40,140" />
