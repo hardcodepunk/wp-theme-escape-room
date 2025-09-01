@@ -10,7 +10,7 @@
 
 <section
   class="relative h-screen bg-cover bg-center"
-  style="background-image: url('<?php echo esc_url( get_template_directory_uri() . '/assets/img/hero.png' ); ?>')"
+  style="background-image: url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero.png'); ?>')"
 >
   <!-- Dark overlay -->
   <div class="absolute inset-0 bg-black bg-opacity-40"></div>

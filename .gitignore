@@ -21,6 +21,9 @@ build/
 
 .prettierrc
 
+.php-cs-fixer.cache
+composer.json
+
 vendor/
 composer.lock
 
