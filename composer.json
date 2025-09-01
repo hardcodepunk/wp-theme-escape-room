@@ -1,0 +1,8 @@
+{
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.86"
+  },
+  "scripts": {
+    "cs:fix": "php-cs-fixer fix --using-cache=yes --allow-risky=yes"
+  }
+}

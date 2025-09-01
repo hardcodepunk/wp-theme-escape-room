@@ -93,6 +93,7 @@ function escape_room_scripts()
     // 2) Tailwind build (load AFTER legacy so utilities win)
     $tw_rel  = '/assets/css/app.css';
     $tw_abs  = get_template_directory() . $tw_rel;
+
     if (file_exists($tw_abs)) {
         wp_enqueue_style(
             'escape-room-tailwind',

@@ -20,17 +20,17 @@ function escape_room_customize_register($wp_customize)
     if (isset($wp_customize->selective_refresh)) {
         $wp_customize->selective_refresh->add_partial(
             'blogname',
-            array(
+            [
                 'selector'        => '.site-title a',
                 'render_callback' => 'escape_room_customize_partial_blogname',
-            )
+            ]
         );
         $wp_customize->selective_refresh->add_partial(
             'blogdescription',
-            array(
+            [
                 'selector'        => '.site-description',
                 'render_callback' => 'escape_room_customize_partial_blogdescription',
-            )
+            ]
         );
     }
 }
@@ -61,6 +61,6 @@ function escape_room_customize_partial_blogdescription()
  */
 function escape_room_customize_preview_js()
 {
-    wp_enqueue_script('escape-room-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), ESCAPE_ROOM_VERSION, true);
+    wp_enqueue_script('escape-room-customizer', get_template_directory_uri() . '/js/customizer.js', [ 'customize-preview' ], ESCAPE_ROOM_VERSION, true);
 }
 add_action('customize_preview_init', 'escape_room_customize_preview_js');

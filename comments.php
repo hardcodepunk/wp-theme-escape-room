@@ -29,6 +29,7 @@ if (post_password_required()) {
 		<h2 class="comments-title">
 			<?php
             $escape_room_comment_count = get_comments_number();
+
         if ('1' === $escape_room_comment_count) {
             printf(
                 /* translators: 1: title. */
@@ -51,10 +52,10 @@ if (post_password_required()) {
 		<ol class="comment-list">
 			<?php
 wp_list_comments(
-    array(
+    [
         'style'      => 'ol',
         'short_ping' => true,
-    )
+    ]
 );
 ?>
 		</ol><!-- .comment-list -->

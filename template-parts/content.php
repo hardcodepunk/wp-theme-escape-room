@@ -38,21 +38,21 @@ if ('post' === get_post_type()) :
                 wp_kses(
                     /* translators: %s: Name of current post. Only visible to screen readers */
                     __('Continue reading<span class="screen-reader-text"> "%s"</span>', 'escape-room'),
-                    array(
-                        'span' => array(
-                            'class' => array(),
-                        ),
-                    )
+                    [
+                        'span' => [
+                            'class' => [],
+                        ],
+                    ]
                 ),
                 wp_kses_post(get_the_title())
             )
         );
 
 wp_link_pages(
-    array(
+    [
         'before' => '<div class="page-links">' . esc_html__('Pages:', 'escape-room'),
         'after'  => '</div>',
-    )
+    ]
 );
 ?>
 	</div><!-- .entry-content -->
