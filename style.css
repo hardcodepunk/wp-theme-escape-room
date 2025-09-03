@@ -641,13 +641,9 @@ body {
   }
 }
 
-/* 3D outline button (front face + back face + right-side connectors) */
+/* 3D outline button */
 
-/* back face (offset up-left) */
-
-/* right side face (draws the connectors) */
-
-/* subtle hover: shift the front face towards the back for a nicer feel */
+/* ===== Rooms ===== */
 
 .rooms-row {
   display: flex;
@@ -659,73 +655,90 @@ body {
   position: relative;
   flex: 1 1 0%;
   overflow: hidden;
-  transition: flex-grow 400ms ease;
+  transition:
+      flex-grow 400ms ease,
+      transform 600ms ease;
 }
 
-/* Image zoom */
+.rooms-row .\!card {
+  position: relative !important;
+  flex: 1 1 0% !important;
+  overflow: hidden !important;
+  transition:
+      flex-grow 400ms ease,
+      transform 600ms ease !important;
+}
 
-.rooms-row .card img {
+/* Image zoom (only when not open) */
+
+.rooms-row .bg-img {
   transition: transform 600ms ease;
 }
 
-.rooms-row .card:hover img {
+.rooms-row:not(.has-open) .card:hover .bg-img {
   transform: scale(1.05);
 }
 
-/* Flex distribution */
+.rooms-row:not(.has-open) .\!card:hover .bg-img {
+  transform: scale(1.05) !important;
+}
 
-.rooms-row:hover .card {
+/* Flex distribution (only when not open) */
+
+.rooms-row:not(.has-open):hover .card {
   flex-grow: 2;
 }
 
-.rooms-row:hover .card:hover {
+.rooms-row:not(.has-open):hover .\!card {
+  flex-grow: 2 !important;
+}
+
+.rooms-row:not(.has-open):hover .card:hover {
   flex-grow: 3;
 }
 
-/* Overlay base + transition */
+.rooms-row:not(.has-open):hover .\!card:hover {
+  flex-grow: 3 !important;
+}
+
+/* Overlay */
 
 .rooms-row .shade {
   background: rgba(0, 0, 0, 0.5);
   transition: background 400ms ease;
 }
 
-.rooms-row:hover .card:not(:hover) .shade {
+.rooms-row:not(.has-open):hover .card:not(:hover) .shade {
   background: rgba(0, 0, 0, 0.75);
 }
 
-.rooms-row:hover .card:hover .shade {
+.rooms-row:not(.has-open):hover .\!card:not(:hover) .shade {
+  background: rgba(0, 0, 0, 0.75) !important;
+}
+
+.rooms-row:not(.has-open):hover .card:hover .shade {
   background: rgba(0, 0, 0, 0.35);
 }
 
-/* Content wrapper */
-
-.rooms-row .inner {
-  opacity: 0;
-  transform: translateY(20px);
-  visibility: hidden;
-  transition:
-      opacity 800ms ease,
-      transform 800ms ease,
-      visibility 0s linear 800ms;
-  /* hide only after fade completes */
+.rooms-row:not(.has-open):hover .\!card:hover .shade {
+  background: rgba(0, 0, 0, 0.35) !important;
 }
 
-/* On hovered card */
+/* Content wrapper (visible by default) */
 
-.rooms-row .card:hover .inner,
-  .rooms-row:hover .card:hover .inner {
+.rooms-row .inner {
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
   transition:
-      opacity 800ms ease,
-      transform 800ms ease,
+      opacity 600ms ease,
+      transform 600ms ease,
       visibility 0s linear 0s;
 }
 
-/* Non-hovered cards */
+/* Non-hovered hide (only when not open) */
 
-.rooms-row:hover .card:not(:hover) .inner {
+.rooms-row:not(.has-open):hover .card:not(:hover) .inner {
   opacity: 0;
   transform: translateY(20px);
   visibility: hidden;
@@ -735,37 +748,241 @@ body {
       visibility 0s linear 400ms;
 }
 
-/* === STAGGER EFFECT === */
+.rooms-row:not(.has-open):hover .\!card:not(:hover) .inner {
+  opacity: 0 !important;
+  transform: translateY(20px) !important;
+  visibility: hidden !important;
+  transition:
+      opacity 400ms ease,
+      transform 400ms ease,
+      visibility 0s linear 400ms !important;
+}
+
+/* Staggered children (only prep during hover, not open) */
 
 .rooms-row .inner h3,
   .rooms-row .inner p,
-  .rooms-row .inner a {
-  opacity: 0;
-  transform: translateY(10px);
+  .rooms-row .inner a.cta {
   transition:
       opacity 600ms ease,
       transform 600ms ease;
 }
 
-/* Reveal order */
+.rooms-row:not(.has-open):hover .inner h3,
+  .rooms-row:not(.has-open):hover .inner p,
+  .rooms-row:not(.has-open):hover .inner a.cta {
+  opacity: 0;
+  transform: translateY(10px);
+}
 
-.rooms-row:hover .card:hover .inner h3 {
+.rooms-row:not(.has-open):hover .card:hover .inner h3 {
   transition-delay: 150ms;
   opacity: 1;
   transform: translateY(0);
 }
 
-.rooms-row:hover .card:hover .inner p {
+.rooms-row:not(.has-open):hover .\!card:hover .inner h3 {
+  transition-delay: 150ms !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.rooms-row:not(.has-open):hover .card:hover .inner p {
   transition-delay: 300ms;
   opacity: 1;
   transform: translateY(0);
 }
 
-.rooms-row:hover .card:hover .inner a {
+.rooms-row:not(.has-open):hover .\!card:hover .inner p {
+  transition-delay: 300ms !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.rooms-row:not(.has-open):hover .card:hover .inner a.cta {
   transition-delay: 600ms;
-  /* CTA comes last */
   opacity: 1;
   transform: translateY(0);
+}
+
+.rooms-row:not(.has-open):hover .\!card:hover .inner a.cta {
+  transition-delay: 600ms !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* ===== Click-to-open state ===== */
+
+.rooms-row.has-open .card {
+  flex-basis: 0%;
+  flex-grow: 0.0001;
+}
+
+.rooms-row.has-open .\!card {
+  flex-basis: 0% !important;
+  flex-grow: 0.0001 !important;
+}
+
+.rooms-row.has-open:hover .card {
+  flex-grow: 0.0001;
+}
+
+.rooms-row.has-open:hover .\!card {
+  flex-grow: 0.0001 !important;
+}
+
+/* disable hover growth */
+
+.rooms-row.has-open .card:not(.is-open) .shade {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.rooms-row.has-open .\!card:not(.is-open) .shade {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.rooms-row.has-open .card:not(.is-open) .inner {
+  opacity: 0;
+  transform: translateY(20px);
+  visibility: hidden;
+  transition:
+      opacity 300ms ease,
+      transform 300ms ease,
+      visibility 0s linear 300ms;
+}
+
+.rooms-row.has-open .\!card:not(.is-open) .inner {
+  opacity: 0 !important;
+  transform: translateY(20px) !important;
+  visibility: hidden !important;
+  transition:
+      opacity 300ms ease,
+      transform 300ms ease,
+      visibility 0s linear 300ms !important;
+}
+
+.rooms-row.has-open .card.is-open {
+  flex-basis: 100%;
+  flex-grow: 1;
+}
+
+.rooms-row.has-open .\!card.is-open {
+  flex-basis: 100% !important;
+  flex-grow: 1 !important;
+}
+
+.rooms-row.has-open .card.is-open .shade {
+  background: rgba(0, 0, 0, 0.35);
+  cursor: zoom-out;
+}
+
+.rooms-row.has-open .\!card.is-open .shade {
+  background: rgba(0, 0, 0, 0.35) !important;
+  cursor: zoom-out !important;
+}
+
+.rooms-row.has-open .card.is-open .inner {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  transition:
+      opacity 600ms ease,
+      transform 600ms ease,
+      visibility 0s linear 0s;
+}
+
+.rooms-row.has-open .\!card.is-open .inner {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  visibility: visible !important;
+  transition:
+      opacity 600ms ease,
+      transform 600ms ease,
+      visibility 0s linear 0s !important;
+}
+
+/* Stagger on open */
+
+.rooms-row.has-open .card.is-open .inner h3 {
+  transition-delay: 120ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rooms-row.has-open .\!card.is-open .inner h3 {
+  transition-delay: 120ms !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.rooms-row.has-open .card.is-open .inner p {
+  transition-delay: 260ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rooms-row.has-open .\!card.is-open .inner p {
+  transition-delay: 260ms !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.rooms-row.has-open .card.is-open .inner a.cta {
+  transition-delay: 520ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rooms-row.has-open .\!card.is-open .inner a.cta {
+  transition-delay: 520ms !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Close button */
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  display: none;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: saturate(120%) blur(4px);
+  transition:
+      background 200ms ease,
+      transform 200ms ease;
+}
+
+.close-btn:hover {
+  transform: scale(1.04);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.rooms-row.has-open .card.is-open .close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rooms-row.has-open .\!card.is-open .close-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Touch highlight fix */
+
+.rooms-row,
+  .rooms-row * {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Reduce motion */
@@ -774,9 +991,29 @@ body {
   .rooms-row .card,
     .rooms-row .inner,
     .rooms-row .shade,
-    .rooms-row .card img {
+    .rooms-row .bg-img,
+    .rooms-row .inner h3,
+    .rooms-row .inner p,
+    .rooms-row .inner a.cta,
+    .close-btn {
     transition: none !important;
   }
+
+  .rooms-row .\!card {
+    transition: none !important;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .pointer-events-none {
@@ -928,14 +1165,6 @@ body {
 
 .max-w-7xl {
   max-width: 80rem;
-}
-
-.shrink {
-  flex-shrink: 1;
-}
-
-.flex-grow {
-  flex-grow: 1;
 }
 
 .-translate-x-1\/2 {
@@ -1206,9 +1435,7 @@ body {
   transform: skew(1deg,25deg);
 }
 
-/*
- * Typography
- */
+/* ===== Typography (fonts) ===== */
 
 @font-face {
   font-family: 'Lato';

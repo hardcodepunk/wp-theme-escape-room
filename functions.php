@@ -10,6 +10,9 @@ if (! defined('ESCAPE_ROOM_VERSION')) {
     define('ESCAPE_ROOM_VERSION', '1.0.0');
 }
 
+/**
+ * Theme setup
+ */
 function escape_room_setup()
 {
     load_theme_textdomain('escape-room', get_template_directory() . '/languages');
@@ -50,12 +53,18 @@ function escape_room_setup()
 }
 add_action('after_setup_theme', 'escape_room_setup');
 
+/**
+ * Content width
+ */
 function escape_room_content_width()
 {
     $GLOBALS['content_width'] = apply_filters('escape_room_content_width', 640);
 }
 add_action('after_setup_theme', 'escape_room_content_width', 0);
 
+/**
+ * Widgets
+ */
 function escape_room_widgets_init()
 {
     register_sidebar([
@@ -71,55 +80,102 @@ function escape_room_widgets_init()
 add_action('widgets_init', 'escape_room_widgets_init');
 
 /**
- * Styles & scripts
+ * Should we enqueue Rooms-specific JS?
+ * Default: front page. Override via filter if needed.
+ */
+function escape_room_should_enqueue_rooms(): bool
+{
+    $should = is_front_page();
+
+    return (bool) apply_filters('escape_room_should_enqueue_rooms', $should);
+}
+
+/**
+ * Enqueue styles & scripts
  *
- * NOTE: Tailwind output is expected at /assets/css/app.css
- * Make sure your build writes there.
+ * - Uses filemtime() for cache-busting (you’ll see ?ver=TIMESTAMP).
+ * - Tailwind output expected at /assets/css/main.css.
+ * - JS files live in /js (app.js, navigation.js, room.js).
  */
 function escape_room_scripts()
 {
+    // Use stylesheet_* to support child themes too.
+    $theme_dir = get_stylesheet_directory();
+    $theme_uri = get_stylesheet_directory_uri();
 
-    // 1) Legacy theme stylesheet (load first)
-    $theme_css_handle = 'escape-room-style';
-    $theme_css_path   = get_stylesheet_directory() . '/style.css';
+    // Helper for versioning
+    $ver = static function (string $abs, string $fallback = ESCAPE_ROOM_VERSION) {
+        return file_exists($abs) ? filemtime($abs) : $fallback;
+    };
+
+    /** ---- CSS ---- */
+    // Base theme stylesheet
+    $style_abs = $theme_dir . '/style.css';
     wp_enqueue_style(
-        $theme_css_handle,
+        'escape-room-style',
         get_stylesheet_uri(),
         [],
-        file_exists($theme_css_path) ? filemtime($theme_css_path) : ESCAPE_ROOM_VERSION
+        $ver($style_abs)
     );
-    wp_style_add_data($theme_css_handle, 'rtl', 'replace');
+    wp_style_add_data('escape-room-style', 'rtl', 'replace');
 
-    // 2) Tailwind build (load AFTER legacy so utilities win)
-    $tw_rel  = '/assets/css/app.css';
-    $tw_abs  = get_template_directory() . $tw_rel;
+    // Tailwind build (main.css)
+    $tw_rel = '/assets/css/main.css';
+    $tw_abs = $theme_dir . $tw_rel;
 
     if (file_exists($tw_abs)) {
         wp_enqueue_style(
             'escape-room-tailwind',
-            get_template_directory_uri() . $tw_rel,
-            [ $theme_css_handle ],                       // ensure order
-            filemtime($tw_abs)
+            $theme_uri . $tw_rel,
+            [ 'escape-room-style' ],
+            $ver($tw_abs)
         );
     }
 
-    // JS
-    wp_enqueue_script(
-        'escape-room-navigation',
-        get_template_directory_uri() . '/js/navigation.js',
-        [],
-        ESCAPE_ROOM_VERSION,
-        true
-    );
+    /** ---- JS ---- */
+    // navigation.js
+    $nav_rel = '/js/navigation.js';
+    $nav_abs = $theme_dir . $nav_rel;
 
-    wp_enqueue_script(
-        'escape-room-app',
-        get_template_directory_uri() . '/js/app.js',
-        [],
-        ESCAPE_ROOM_VERSION,
-        true
-    );
+    if (file_exists($nav_abs)) {
+        wp_enqueue_script(
+            'escape-room-navigation',
+            $theme_uri . $nav_rel,
+            [],
+            $ver($nav_abs),
+            true
+        );
+    }
 
+    // app.js
+    $app_rel = '/js/app.js';
+    $app_abs = $theme_dir . $app_rel;
+
+    if (file_exists($app_abs)) {
+        wp_enqueue_script(
+            'escape-room-app',
+            $theme_uri . $app_rel,
+            [],
+            $ver($app_abs),
+            true
+        );
+    }
+
+    // room.js (click-to-open for Rooms section)
+    $rooms_rel = '/js/room.js'; // change if your file is named differently
+    $rooms_abs = $theme_dir . $rooms_rel;
+
+    if (file_exists($rooms_abs) && escape_room_should_enqueue_rooms()) {
+        wp_enqueue_script(
+            'escape-room-rooms',
+            $theme_uri . $rooms_rel,
+            [],
+            $ver($rooms_abs),
+            true
+        );
+    }
+
+    // WP threaded comments
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
     }
