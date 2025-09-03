@@ -72,6 +72,117 @@
   .btn-cube:hover {
     background: rgba(255, 255, 255, 0.06);
   }
+  .rooms-row {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  .rooms-row .card {
+    position: relative;
+    flex: 1 1 0%;
+    overflow: hidden;
+    transition: flex-grow 400ms ease;
+  }
+
+  /* Image zoom */
+  .rooms-row .card img {
+    transition: transform 600ms ease;
+  }
+  .rooms-row .card:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Flex distribution */
+  .rooms-row:hover .card {
+    flex-grow: 2;
+  }
+  .rooms-row:hover .card:hover {
+    flex-grow: 3;
+  }
+
+  /* Overlay base + transition */
+  .rooms-row .shade {
+    background: rgba(0, 0, 0, 0.5);
+    transition: background 400ms ease;
+  }
+  .rooms-row:hover .card:not(:hover) .shade {
+    background: rgba(0, 0, 0, 0.75);
+  }
+  .rooms-row:hover .card:hover .shade {
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  /* Content wrapper */
+  .rooms-row .inner {
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+    transition:
+      opacity 800ms ease,
+      transform 800ms ease,
+      visibility 0s linear 800ms; /* hide only after fade completes */
+  }
+
+  /* On hovered card */
+  .rooms-row .card:hover .inner,
+  .rooms-row:hover .card:hover .inner {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition:
+      opacity 800ms ease,
+      transform 800ms ease,
+      visibility 0s linear 0s;
+  }
+
+  /* Non-hovered cards */
+  .rooms-row:hover .card:not(:hover) .inner {
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+    transition:
+      opacity 400ms ease,
+      transform 400ms ease,
+      visibility 0s linear 400ms;
+  }
+
+  /* === STAGGER EFFECT === */
+  .rooms-row .inner h3,
+  .rooms-row .inner p,
+  .rooms-row .inner a {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 600ms ease,
+      transform 600ms ease;
+  }
+
+  /* Reveal order */
+  .rooms-row:hover .card:hover .inner h3 {
+    transition-delay: 150ms;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .rooms-row:hover .card:hover .inner p {
+    transition-delay: 300ms;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .rooms-row:hover .card:hover .inner a {
+    transition-delay: 600ms; /* CTA comes last */
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .rooms-row .card,
+    .rooms-row .inner,
+    .rooms-row .shade,
+    .rooms-row .card img {
+      transition: none !important;
+    }
+  }
 }
 
 /*
