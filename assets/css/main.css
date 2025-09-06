@@ -77,9 +77,11 @@
     position: relative;
     flex: 1 1 0%;
     overflow: hidden;
+    /* slower, smoother */
     transition:
-      flex-grow 400ms ease,
-      transform 600ms ease;
+      flex-grow 900ms ease,
+      flex-basis 900ms ease,
+      transform 700ms ease;
   }
 
   /* Image zoom (only when not open) */
@@ -116,8 +118,8 @@
     transform: translateY(0);
     visibility: visible;
     transition:
-      opacity 600ms ease,
-      transform 600ms ease,
+      opacity 700ms ease,
+      transform 700ms ease,
       visibility 0s linear 0s;
   }
   /* Non-hovered hide (only when not open) */
@@ -170,6 +172,11 @@
     flex-grow: 0.0001;
   } /* disable hover growth */
 
+  /* hide divider lines when open (container uses divide-x divide-white) */
+  .rooms-row.has-open > .card {
+    border-color: transparent !important;
+  }
+
   .rooms-row.has-open .card:not(.is-open) .shade {
     background: rgba(0, 0, 0, 0.8);
   }
@@ -196,8 +203,8 @@
     transform: translateY(0);
     visibility: visible;
     transition:
-      opacity 600ms ease,
-      transform 600ms ease,
+      opacity 900ms ease,
+      transform 900ms ease,
       visibility 0s linear 0s;
   }
   /* Stagger on open */
@@ -217,11 +224,9 @@
     transform: translateY(0);
   }
 
-  /* Close button */
+  /* Close button (TOP-CENTER) */
   .close-btn {
     position: absolute;
-    top: 16px;
-    right: 16px;
     z-index: 10;
     display: none;
     padding: 10px 12px;
@@ -237,14 +242,57 @@
       background 200ms ease,
       transform 200ms ease;
   }
+  /* move to top middle */
+  .close-btn {
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
   .close-btn:hover {
-    transform: scale(1.04);
+    transform: translateX(-50%) scale(1.04);
     background: rgba(0, 0, 0, 0.6);
   }
   .rooms-row.has-open .card.is-open .close-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+  }
+
+  /* Optional: Prev/Next arrows (only if you add .room-nav + .nav-btn markup) */
+  .room-nav {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    pointer-events: none;
+  }
+  .room-nav.is-visible {
+    display: flex;
+  }
+  .nav-btn {
+    height: 44px;
+    width: 44px;
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: saturate(120%) blur(4px);
+    transition:
+      transform 150ms ease,
+      background 150ms ease;
+  }
+  .nav-btn:hover {
+    transform: scale(1.05);
+    background: rgba(0, 0, 0, 0.6);
   }
 
   /* Touch highlight fix */
