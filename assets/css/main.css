@@ -224,40 +224,6 @@
     transform: translateY(0);
   }
 
-  /* Close button (TOP-CENTER) */
-  .close-btn {
-    position: absolute;
-    z-index: 10;
-    display: none;
-    padding: 10px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 9999px;
-    background: rgba(0, 0, 0, 0.45);
-    color: #fff;
-    font-size: 14px;
-    line-height: 1;
-    cursor: pointer;
-    backdrop-filter: saturate(120%) blur(4px);
-    transition:
-      background 200ms ease,
-      transform 200ms ease;
-  }
-  /* move to top middle */
-  .close-btn {
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .close-btn:hover {
-    transform: translateX(-50%) scale(1.04);
-    background: rgba(0, 0, 0, 0.6);
-  }
-  .rooms-row.has-open .card.is-open .close-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
   /* Optional: Prev/Next arrows (only if you add .room-nav + .nav-btn markup) */
   .room-nav {
     position: absolute;
