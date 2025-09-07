@@ -295,10 +295,24 @@
     background: rgba(0, 0, 0, 0.6);
   }
 
+  .nav-btn[disabled] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   /* Touch highlight fix */
   .rooms-row,
   .rooms-row * {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .rooms-row .card {
+    cursor: pointer;
+  }
+  .rooms-row .card .close-btn,
+  .rooms-row .card .cta,
+  .room-nav .nav-btn {
+    cursor: pointer;
   }
 
   /* Reduce motion */

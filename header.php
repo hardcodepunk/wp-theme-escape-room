@@ -15,15 +15,17 @@
   class="fixed top-0 inset-x-0 z-50 p-4 transition-colors duration-300 ease-out">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 grid grid-cols-3 items-center">
 
-    <!-- Left chunk -->
+   <!-- Left chunk -->
     <div data-chunk
-         class="hidden md:flex items-center gap-4 text-xs uppercase font-light tracking-wide opacity-80
+        class="hidden md:flex items-center gap-4 text-xs uppercase font-light tracking-wide
                 transition-all duration-300 ease-out">
-      <a href="#" class="hover:opacity-100">EN</a><span>•</span>
-      <a href="#" class="hover:opacity-100">FR</a><span>•</span>
-      <a href="#" class="hover:opacity-100">NL</a>
-      <span class="mx-3 opacity-40">|</span>
-      <a href="#" aria-label="Instagram" class="hover:opacity-100">IG</a>
+      <span class="flex items-center gap-4 opacity-80">
+        <a href="#" class="hover:opacity-100">EN</a><span>•</span>
+        <a href="#" class="hover:opacity-100">FR</a><span>•</span>
+        <a href="#" class="hover:opacity-100">NL</a>
+        <span class="mx-3 opacity-40">|</span>
+        <a href="#" aria-label="Instagram" class="hover:opacity-100">IG</a>
+      </span>
     </div>
 
     <!-- Center: logo -->

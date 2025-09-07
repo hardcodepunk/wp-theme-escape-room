@@ -24,6 +24,7 @@ if (! defined('ABSPATH')) {
 
 foreach ($rooms as $i => $room) : ?>
         <div class="card group" data-room="<?php echo esc_attr($i); ?>">
+          <!-- Background image -->
           <img
             src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/' . $room['img']); ?>"
             alt="<?php echo esc_attr($room['title']); ?>"
@@ -32,12 +33,8 @@ foreach ($rooms as $i => $room) : ?>
             decoding="async"
           />
 
+          <!-- Dark overlay (still closes on click) -->
           <div class="shade absolute inset-0" data-action="close" aria-hidden="true"></div>
-
-          <!-- Top-center close (shown only when open via CSS) -->
-          <button type="button" class="close-btn top-center" data-action="close" aria-label="Close room">
-            ✕ <span class="sr-only">Close</span>
-          </button>
 
           <!-- Content -->
           <div class="inner absolute inset-0 flex flex-col items-center justify-end text-center text-white space-y-4 px-6 pb-12">
@@ -46,6 +43,7 @@ foreach ($rooms as $i => $room) : ?>
               <p class="text-sm opacity-80"><?php echo esc_html($room['desc']); ?></p>
             <?php endif; ?>
 
+            <!-- CTA flips between Enter/Leave -->
             <button
               type="button"
               class="cta relative group inline-block w-[160px] mt-4"
@@ -61,7 +59,7 @@ foreach ($rooms as $i => $room) : ?>
                 <line x1="260" y1="240" x2="340" y2="200" />
               </svg>
               <span class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-[-14%] translate-y-[4%]">
-                <span class="inline-block [transform:skew(1deg,25deg)] text-white font-light tracking-[0.30em] text-[10px] uppercase">Enter</span>
+                <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white font-light tracking-[0.30em] text-[10px] uppercase">Enter</span>
               </span>
             </button>
           </div>
@@ -69,10 +67,11 @@ foreach ($rooms as $i => $room) : ?>
     <?php endforeach; ?>
   </div>
 
-  <!-- Nav arrows (only visible when a card is open) -->
+  <!-- Nav arrows (visible only when open) -->
   <div class="room-nav pointer-events-none">
     <button type="button" class="nav-btn prev pointer-events-auto" data-action="prev" aria-label="Previous room">‹</button>
     <button type="button" class="nav-btn next pointer-events-auto" data-action="next" aria-label="Next room">›</button>
   </div>
 </section>
+
 
