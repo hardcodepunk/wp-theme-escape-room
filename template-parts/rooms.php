@@ -67,11 +67,38 @@ foreach ($rooms as $i => $room) : ?>
     <?php endforeach; ?>
   </div>
 
-  <!-- Nav arrows (visible only when open) -->
-  <div class="room-nav pointer-events-none">
-    <button type="button" class="nav-btn prev pointer-events-auto" data-action="prev" aria-label="Previous room">‹</button>
-    <button type="button" class="nav-btn next pointer-events-auto" data-action="next" aria-label="Next room">›</button>
-  </div>
+<div class="room-nav pointer-events-none">
+  <button type="button" class="nav-btn prev pointer-events-auto" data-action="prev" aria-label="Previous room">
+    <span class="sr-only">Previous</span>
+    <svg class="nav-icon" viewBox="0 0 100 100" aria-hidden="true">
+      <g transform="rotate(-90 50 50)" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="50" y1="18" x2="30" y2="78"/>
+        <line x1="50" y1="18" x2="70" y2="78"/>
+        <line x1="50" y1="18" x2="50" y2="82"/>
+        <line x1="30" y1="78" x2="50" y2="82"/>
+        <line x1="70" y1="78" x2="50" y2="82"/>
+      </g>
+    </svg>
+  </button>
+
+  <button type="button" class="nav-btn next pointer-events-auto" data-action="next" aria-label="Next room">
+    <span class="sr-only">Next</span>
+    <svg class="nav-icon" viewBox="0 0 100 100" aria-hidden="true">
+      <g transform="rotate(90 50 50)" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="50" y1="18" x2="30" y2="78"/>
+        <line x1="50" y1="18" x2="70" y2="78"/>
+        <line x1="50" y1="18" x2="50" y2="82"/>
+        <line x1="30" y1="78" x2="50" y2="82"/>
+        <line x1="70" y1="78" x2="50" y2="82"/>
+      </g>
+    </svg>
+  </button>
+</div>
+
+
+
+
+
 </section>
 
 
