@@ -1,0 +1,42 @@
+name: Deploy theme to Let-Me-Out (SFTP)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-theme
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      - name: Deploy over SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2
+        with:
+          server:   ${{ secrets.SFTP_HOST }}
+          port:     ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+          local_path:  "escape-room/*"
+          remote_path: "${{ secrets.SFTP_PATH }}"
+          delete_remote_files: true
+          sftp_only: true
