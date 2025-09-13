@@ -1,4 +1,4 @@
-name: Deploy theme to Let-Me-Out (SFTP)
+name: Deploy theme to Let-Me-Out
 
 on:
   push:
@@ -20,7 +20,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Build only if you actually have a package.json in the theme folder
       - name: Setup Node
+        if: hashFiles(format('{0}/package.json', env.THEME_DIR)) != ''
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -41,14 +43,27 @@ jobs:
           cd "$THEME_DIR"
           npm run build
 
-      - name: Deploy over SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2
+      # Optional: clean target before upload (CAREFUL! only the theme dir)
+      - name: Clean remote theme dir
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          REMOTE: ${{ vars.SFTP_PATH }}
         with:
-          server: ${{ vars.SFTP_HOST }}
-          port: ${{ vars.SFTP_PORT }}
+          host: ${{ vars.SFTP_HOST }}
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
-          local_path: '${{ env.THEME_DIR }}/*'
-          remote_path: ${{ vars.SFTP_PATH }}
-          delete_remote_files: true
-          sftp_only: true
+          port: ${{ vars.SFTP_PORT }}
+          script: |
+            mkdir -p "$REMOTE"
+            find "$REMOTE" -mindepth 1 -maxdepth 1 -exec rm -rf {} \;
+
+      - name: Upload theme via SCP (over SSH)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+          port: ${{ vars.SFTP_PORT }}
+          source: '${{ env.THEME_DIR }}/*'
+          target: '${{ vars.SFTP_PATH }}'
+          overwrite: true
