@@ -9,9 +9,13 @@ concurrency:
   group: deploy-theme
   cancel-in-progress: true
 
+env:
+  THEME_DIR: escape-room
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,13 +24,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      - name: Install deps
-        run: npm ci
+      - name: Install deps (if package.json exists)
+        if: hashFiles(format('{0}/package.json', env.THEME_DIR)) != ''
+        run: |
+          cd "$THEME_DIR"
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
-      - name: Build assets
-        run: npm run build
+      - name: Build assets (if package.json exists)
+        if: hashFiles(format('{0}/package.json', env.THEME_DIR)) != ''
+        run: |
+          cd "$THEME_DIR"
+          npm run build
 
       - name: Deploy over SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2
@@ -35,7 +48,7 @@ jobs:
           port: ${{ vars.SFTP_PORT }}
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
-          local_path: 'escape-room/*'
+          local_path: '${{ env.THEME_DIR }}/*'
           remote_path: ${{ vars.SFTP_PATH }}
           delete_remote_files: true
           sftp_only: true
