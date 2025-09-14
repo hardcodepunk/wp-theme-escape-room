@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  THEME_DIR: escape-room
+  THEME_DIR: .
 
 jobs:
   deploy:
@@ -20,17 +20,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Build only if you actually have a package.json in the theme folder
       - name: Setup Node
-        if: hashFiles(format('{0}/package.json', env.THEME_DIR)) != ''
+        if: hashFiles('package.json') != ''
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Install deps (if package.json exists)
-        if: hashFiles(format('{0}/package.json', env.THEME_DIR)) != ''
+        if: hashFiles('package.json') != ''
         run: |
-          cd "$THEME_DIR"
           if [ -f package-lock.json ]; then
             npm ci
           else
@@ -38,10 +36,8 @@ jobs:
           fi
 
       - name: Build assets (if package.json exists)
-        if: hashFiles(format('{0}/package.json', env.THEME_DIR)) != ''
-        run: |
-          cd "$THEME_DIR"
-          npm run build
+        if: hashFiles('package.json') != ''
+        run: npm run build
 
       - name: Clean remote theme dir
         uses: appleboy/ssh-action@v1.0.3
@@ -51,23 +47,22 @@ jobs:
           password: ${{ secrets.SFTP_PASS }}
           port: ${{ vars.SFTP_PORT }}
           script: |
-            mkdir -p "${{ vars.SFTP_PATH }}"
-            find "${{ vars.SFTP_PATH }}" -mindepth 1 -maxdepth 1 -exec rm -rf {} \;
+            set -e
+            REMOTE="${{ vars.SFTP_PATH }}"
+            case "$REMOTE" in
+              /data/sites/web/*) ;;
+              *) echo "Refusing to clean unexpected path: $REMOTE" ; exit 1 ;;
+            esac
+            mkdir -p "$REMOTE"
+            find "$REMOTE" -mindepth 1 -maxdepth 1 -exec rm -rf {} \;
 
-      - name: Debug workspace
-        run: |
-          pwd
-          ls -la
-          echo "---- THEME ----"
-          ls -la "${{ env.THEME_DIR }}" || true
-
-      - name: Upload theme via SCP (over SSH)
+      - name: Upload theme via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.SFTP_HOST }}
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
           port: ${{ vars.SFTP_PORT }}
-          source: '${{ env.THEME_DIR }}/*'
+          source: './'
           target: '${{ vars.SFTP_PATH }}'
           overwrite: true
