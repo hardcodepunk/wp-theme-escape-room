@@ -54,6 +54,13 @@ jobs:
             mkdir -p "${{ vars.SFTP_PATH }}"
             find "${{ vars.SFTP_PATH }}" -mindepth 1 -maxdepth 1 -exec rm -rf {} \;
 
+      - name: Debug workspace
+        run: |
+          pwd
+          ls -la
+          echo "---- THEME ----"
+          ls -la "${{ env.THEME_DIR }}" || true
+
       - name: Upload theme via SCP (over SSH)
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -64,10 +71,3 @@ jobs:
           source: '${{ env.THEME_DIR }}/*'
           target: '${{ vars.SFTP_PATH }}'
           overwrite: true
-
-      - name: Debug workspace
-        run: |
-          pwd
-          ls -la
-          echo "---- THEME ----"
-          ls -la "${{ env.THEME_DIR }}" || true
