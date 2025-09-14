@@ -43,19 +43,16 @@ jobs:
           cd "$THEME_DIR"
           npm run build
 
-      # Optional: clean target before upload (CAREFUL! only the theme dir)
       - name: Clean remote theme dir
         uses: appleboy/ssh-action@v1.0.3
-        env:
-          REMOTE: ${{ vars.SFTP_PATH }}
         with:
           host: ${{ vars.SFTP_HOST }}
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
           port: ${{ vars.SFTP_PORT }}
           script: |
-            mkdir -p "$REMOTE"
-            find "$REMOTE" -mindepth 1 -maxdepth 1 -exec rm -rf {} \;
+            mkdir -p "${{ vars.SFTP_PATH }}"
+            find "${{ vars.SFTP_PATH }}" -mindepth 1 -maxdepth 1 -exec rm -rf {} \;
 
       - name: Upload theme via SCP (over SSH)
         uses: appleboy/scp-action@v0.1.7
