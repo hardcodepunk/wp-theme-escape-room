@@ -4,6 +4,7 @@
   <?php
     get_template_part('template-parts/hero');
 get_template_part('template-parts/rooms');
+get_template_part('template-parts/reviews');
 ?>
 </main>
 
