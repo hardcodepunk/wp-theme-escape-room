@@ -1030,6 +1030,10 @@ body {
   margin-top: 1rem;
 }
 
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1122,6 +1126,22 @@ body {
   width: 100%;
 }
 
+.w-\[min\(90vw\2c 900px\)\] {
+  width: min(90vw,900px);
+}
+
+.w-\[clamp\(220px\2c 60vw\2c 560px\)\] {
+  width: clamp(220px,60vw,560px);
+}
+
+.w-\[clamp\(120px\2c 60vw\2c 560px\)\] {
+  width: clamp(120px,60vw,560px);
+}
+
+.w-\[clamp\(74px\2c 20vw\2c 187px\)\] {
+  width: clamp(74px,20vw,187px);
+}
+
 .max-w-7xl {
   max-width: 80rem;
 }
@@ -1206,6 +1226,12 @@ body {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
+.space-y-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2rem * var(--tw-space-y-reverse));
 }
 
 .divide-x > :not([hidden]) ~ :not([hidden]) {
@@ -1325,6 +1351,11 @@ body {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .font-bold {

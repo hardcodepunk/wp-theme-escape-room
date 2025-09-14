@@ -32,7 +32,7 @@
     <div data-chunk class="flex justify-center transition-all duration-300 ease-out">
       <a href="<?php echo esc_url(home_url('/')); ?>" class="block">
         <img
-          src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo.svg'); ?>"
+          src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-with-text.svg'); ?>"
           alt="<?php esc_attr_e('Logo', 'escape-room'); ?>"
           class="logo-img transition-all duration-300 ease-in-out h-20 md:h-28"
           loading="lazy" decoding="async"
