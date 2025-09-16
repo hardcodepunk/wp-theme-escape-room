@@ -641,51 +641,6 @@ body {
   }
 }
 
-/* 3D outline button */
-
-.btn-cube {
-  position: relative;
-  display: inline-block;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  font-weight: 100;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-  border: 1px solid #fff;
-  transform-style: preserve-3d;
-}
-
-.btn-cube::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid #fff;
-  transform: translate(12px, -12px);
-  pointer-events: none;
-}
-
-.btn-cube::after {
-  content: '';
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  width: 12px;
-  height: 100%;
-  border-right: 1px solid #fff;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  transform: skewY(-20deg);
-  pointer-events: none;
-}
-
-.btn-cube:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-
 /* ===== Rooms ===== */
 
 .rooms-row {
@@ -698,14 +653,12 @@ body {
   position: relative;
   flex: 1 1 0%;
   overflow: hidden;
-  /* slower, smoother */
   transition:
       flex-grow 900ms ease,
       flex-basis 900ms ease,
       transform 700ms ease;
+  cursor: pointer;
 }
-
-/* Image zoom (only when not open) */
 
 .rooms-row .bg-img {
   transition: transform 600ms ease;
@@ -715,8 +668,6 @@ body {
   transform: scale(1.05);
 }
 
-/* Flex distribution (only when not open) */
-
 .rooms-row:not(.has-open):hover .card {
   flex-grow: 2;
 }
@@ -724,8 +675,6 @@ body {
 .rooms-row:not(.has-open):hover .card:hover {
   flex-grow: 3;
 }
-
-/* Overlay */
 
 .rooms-row .shade {
   background: rgba(0, 0, 0, 0.5);
@@ -740,8 +689,6 @@ body {
   background: rgba(0, 0, 0, 0.35);
 }
 
-/* Content wrapper (visible by default) */
-
 .rooms-row .inner {
   opacity: 1;
   transform: translateY(0);
@@ -752,8 +699,6 @@ body {
       visibility 0s linear 0s;
 }
 
-/* Non-hovered hide (only when not open) */
-
 .rooms-row:not(.has-open):hover .card:not(:hover) .inner {
   opacity: 0;
   transform: translateY(20px);
@@ -763,8 +708,6 @@ body {
       transform 400ms ease,
       visibility 0s linear 400ms;
 }
-
-/* Staggered children (only prep during hover, not open) */
 
 .rooms-row .inner h3,
   .rooms-row .inner p,
@@ -818,7 +761,11 @@ body {
   transform: translateY(0) !important;
 }
 
-/* ===== Click-to-open state ===== */
+/* ===== Click-to-open (overlay) ===== */
+
+.rooms-row.has-open {
+  height: 100vh;
+}
 
 .rooms-row.has-open .card {
   flex-basis: 0%;
@@ -829,12 +776,12 @@ body {
   flex-grow: 0.0001;
 }
 
-/* disable hover growth */
-
-/* hide divider lines when open (container uses divide-x divide-white) */
-
 .rooms-row.has-open > .card {
   border-color: transparent !important;
+}
+
+.rooms-row.has-open .card:not(.is-open) {
+  visibility: hidden;
 }
 
 .rooms-row.has-open .card:not(.is-open) .shade {
@@ -852,8 +799,14 @@ body {
 }
 
 .rooms-row.has-open .card.is-open {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
   flex-basis: 100%;
   flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .rooms-row.has-open .card.is-open .shade {
@@ -869,9 +822,9 @@ body {
       opacity 900ms ease,
       transform 900ms ease,
       visibility 0s linear 0s;
+  pointer-events: auto;
+  position: relative;
 }
-
-/* Stagger on open */
 
 .rooms-row.has-open .card.is-open .inner h3 {
   transition-delay: 120ms;
@@ -897,16 +850,30 @@ body {
   transform: translateY(0) !important;
 }
 
-/* Optional: Prev/Next arrows (only if you add .room-nav + .nav-btn markup) */
+.rooms-row .card .open-content {
+  display: none;
+}
+
+.rooms-row.has-open .card.is-open .open-content {
+  display: block;
+}
+
+.rooms-row.has-open .card.is-open .content-wrap {
+  min-height: 100%;
+  background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.55) 18%, rgba(0, 0, 0, 0.85) 40%);
+}
+
+/* nav overlay sits above */
 
 .room-nav {
-  position: absolute;
+  position: fixed;
   inset: 0;
   display: none;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
   pointer-events: none;
+  z-index: 70;
 }
 
 .room-nav.is-visible {
@@ -921,6 +888,7 @@ body {
   line-height: 0;
   color: #fff;
   cursor: pointer;
+  pointer-events: auto;
 }
 
 .nav-icon {
@@ -934,15 +902,6 @@ body {
   pointer-events: none;
 }
 
-.rooms-row,
-  .rooms-row * {
-  -webkit-tap-highlight-color: transparent;
-}
-
-.rooms-row .card {
-  cursor: pointer;
-}
-
 .rooms-row .card .close-btn,
   .rooms-row .card .cta,
   .room-nav .nav-btn {
@@ -953,8 +912,6 @@ body {
   .rooms-row .card .\!cta {
   cursor: pointer !important;
 }
-
-/* Reduce motion */
 
 @media (prefers-reduced-motion: reduce) {
   .rooms-row .card,
@@ -1069,8 +1026,24 @@ body {
   margin-right: auto;
 }
 
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .ml-4 {
   margin-left: 1rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
 }
 
 .mt-4 {
@@ -1081,28 +1054,8 @@ body {
   margin-top: 1.5rem;
 }
 
-.mb-10 {
-  margin-bottom: 2.5rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mb-12 {
-  margin-bottom: 3rem;
-}
-
-.mt-12 {
-  margin-top: 3rem;
-}
-
-.mt-3 {
-  margin-top: 0.75rem;
 }
 
 .block {
@@ -1141,6 +1094,10 @@ body {
   display: none;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
 .h-12 {
   height: 3rem;
 }
@@ -1157,6 +1114,18 @@ body {
   height: 1rem;
 }
 
+.h-40 {
+  height: 10rem;
+}
+
+.h-5 {
+  height: 1.25rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
 .h-8 {
   height: 2rem;
 }
@@ -1169,28 +1138,28 @@ body {
   height: 100%;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
-.h-5 {
-  height: 1.25rem;
-}
-
-.h-6 {
-  height: 1.5rem;
-}
-
-.h-10 {
-  height: 2.5rem;
-}
-
 .h-px {
   height: 1px;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
+.w-10 {
+  width: 2.5rem;
+}
+
 .w-4 {
   width: 1rem;
+}
+
+.w-5 {
+  width: 1.25rem;
+}
+
+.w-6 {
+  width: 1.5rem;
 }
 
 .w-8 {
@@ -1213,32 +1182,8 @@ body {
   width: 100%;
 }
 
-.w-\[min\(90vw\2c 900px\)\] {
-  width: min(90vw,900px);
-}
-
-.w-\[clamp\(220px\2c 60vw\2c 560px\)\] {
-  width: clamp(220px,60vw,560px);
-}
-
-.w-\[clamp\(120px\2c 60vw\2c 560px\)\] {
-  width: clamp(120px,60vw,560px);
-}
-
-.w-\[clamp\(74px\2c 20vw\2c 187px\)\] {
-  width: clamp(74px,20vw,187px);
-}
-
-.w-5 {
-  width: 1.25rem;
-}
-
-.w-6 {
-  width: 1.5rem;
-}
-
-.w-10 {
-  width: 2.5rem;
+.max-w-5xl {
+  max-width: 64rem;
 }
 
 .max-w-7xl {
@@ -1283,12 +1228,16 @@ body {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grid-cols-4 {
@@ -1327,6 +1276,14 @@ body {
   justify-content: space-between;
 }
 
+.gap-10 {
+  gap: 2.5rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
 .gap-3 {
   gap: 0.75rem;
 }
@@ -1335,20 +1292,18 @@ body {
   gap: 1rem;
 }
 
-.gap-8 {
-  gap: 2rem;
-}
-
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .gap-6 {
   gap: 1.5rem;
 }
 
-.gap-10 {
-  gap: 2.5rem;
+.gap-8 {
+  gap: 2rem;
+}
+
+.space-y-10 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
 }
 
 .space-y-12 > :not([hidden]) ~ :not([hidden]) {
@@ -1357,16 +1312,22 @@ body {
   margin-bottom: calc(3rem * var(--tw-space-y-reverse));
 }
 
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+
 .space-y-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
-.space-y-8 > :not([hidden]) ~ :not([hidden]) {
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
-  margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(2rem * var(--tw-space-y-reverse));
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 
 .divide-x > :not([hidden]) ~ :not([hidden]) {
@@ -1388,6 +1349,10 @@ body {
   align-self: center;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1398,10 +1363,6 @@ body {
   border-radius: 0.25rem;
 }
 
-.rounded-md {
-  border-radius: 0.375rem;
-}
-
 .rounded-2xl {
   border-radius: 1rem;
 }
@@ -1410,12 +1371,12 @@ body {
   border-radius: 9999px;
 }
 
-.border {
-  border-width: 1px;
+.rounded-md {
+  border-radius: 0.375rem;
 }
 
-.border-white\/60 {
-  border-color: rgb(255 255 255 / 0.6);
+.border {
+  border-width: 1px;
 }
 
 .border-white\/15 {
@@ -1426,17 +1387,21 @@ body {
   border-color: rgb(255 255 255 / 0.2);
 }
 
+.border-white\/60 {
+  border-color: rgb(255 255 255 / 0.6);
+}
+
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
 
-.bg-white\/5 {
-  background-color: rgb(255 255 255 / 0.05);
-}
-
 .bg-white\/40 {
   background-color: rgb(255 255 255 / 0.4);
+}
+
+.bg-white\/5 {
+  background-color: rgb(255 255 255 / 0.05);
 }
 
 .bg-opacity-40 {
@@ -1474,18 +1439,26 @@ body {
   padding-right: 1.5rem;
 }
 
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-
 .py-16 {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
 
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
 .pb-12 {
   padding-bottom: 3rem;
+}
+
+.pt-36 {
+  padding-top: 9rem;
 }
 
 .text-center {
@@ -1501,6 +1474,11 @@ body {
   line-height: 2rem;
 }
 
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
 .text-8xl {
   font-size: 6rem;
   line-height: 1;
@@ -1514,6 +1492,11 @@ body {
   font-size: 12px;
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -1524,24 +1507,14 @@ body {
   line-height: 1.25rem;
 }
 
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
-
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .font-bold {
@@ -1564,12 +1537,12 @@ body {
   text-transform: lowercase;
 }
 
-.leading-tight {
-  line-height: 1.25;
-}
-
 .leading-relaxed {
   line-height: 1.625;
+}
+
+.leading-tight {
+  line-height: 1.25;
 }
 
 .tracking-\[0\.30em\] {
@@ -1618,20 +1591,20 @@ body {
   opacity: 1;
 }
 
-.opacity-40 {
-  opacity: 0.4;
-}
-
-.opacity-80 {
-  opacity: 0.8;
-}
-
 .opacity-30 {
   opacity: 0.3;
 }
 
+.opacity-40 {
+  opacity: 0.4;
+}
+
 .opacity-70 {
   opacity: 0.7;
+}
+
+.opacity-80 {
+  opacity: 0.8;
 }
 
 .opacity-90 {
@@ -1690,8 +1663,18 @@ body {
   transition-duration: 150ms;
 }
 
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .duration-300 {
   transition-duration: 300ms;
+}
+
+.duration-500 {
+  transition-duration: 500ms;
 }
 
 .ease-in-out {
@@ -1704,6 +1687,12 @@ body {
 
 .\[transform\:skew\(1deg\2c 25deg\)\] {
   transform: skew(1deg,25deg);
+}
+
+/* lock scroll when a room is open */
+
+.modal-open {
+  overflow: hidden;
 }
 
 /* ===== Typography (fonts) ===== */
@@ -1779,6 +1768,12 @@ body {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.hover\:scale-\[1\.03\]:hover {
+  --tw-scale-x: 1.03;
+  --tw-scale-y: 1.03;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .hover\:border-white:hover {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
@@ -1820,10 +1815,6 @@ body {
     margin-bottom: 4rem;
   }
 
-  .md\:mt-16 {
-    margin-top: 4rem;
-  }
-
   .md\:inline-block {
     display: inline-block;
   }
@@ -1836,6 +1827,10 @@ body {
     display: none;
   }
 
+  .md\:h-12 {
+    height: 3rem;
+  }
+
   .md\:h-16 {
     height: 4rem;
   }
@@ -1844,16 +1839,24 @@ body {
     height: 7rem;
   }
 
-  .md\:h-12 {
-    height: 3rem;
+  .md\:h-48 {
+    height: 12rem;
   }
 
   .md\:w-12 {
     width: 3rem;
   }
 
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .md\:gap-12 {
     gap: 3rem;
+  }
+
+  .md\:gap-4 {
+    gap: 1rem;
   }
 
   .md\:px-10 {
@@ -1861,9 +1864,23 @@ body {
     padding-right: 2.5rem;
   }
 
+  .md\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
   .md\:py-24 {
     padding-top: 6rem;
     padding-bottom: 6rem;
+  }
+
+  .md\:pt-44 {
+    padding-top: 11rem;
+  }
+
+  .md\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 
   .md\:text-3xl {
@@ -1871,9 +1888,9 @@ body {
     line-height: 2.25rem;
   }
 
-  .md\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
+  .md\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
 
   .md\:text-5xl {
@@ -1884,6 +1901,11 @@ body {
   .md\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .md\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }
 

@@ -28,6 +28,11 @@
   }
 }
 
+/* lock scroll when a room is open */
+.modal-open {
+  overflow: hidden;
+}
+
 @layer components {
   .logo-img {
     @apply h-20 md:h-28;
@@ -36,7 +41,6 @@
     @apply h-12 md:h-16;
   }
 
-  /* 3D outline button */
   .btn-cube {
     @apply relative inline-block px-10 py-3 font-thin uppercase tracking-widest text-white;
     border: 1px solid #fff;
@@ -77,14 +81,13 @@
     position: relative;
     flex: 1 1 0%;
     overflow: hidden;
-    /* slower, smoother */
     transition:
       flex-grow 900ms ease,
       flex-basis 900ms ease,
       transform 700ms ease;
+    cursor: pointer;
   }
 
-  /* Image zoom (only when not open) */
   .rooms-row .bg-img {
     transition: transform 600ms ease;
   }
@@ -92,7 +95,6 @@
     transform: scale(1.05);
   }
 
-  /* Flex distribution (only when not open) */
   .rooms-row:not(.has-open):hover .card {
     flex-grow: 2;
   }
@@ -100,7 +102,6 @@
     flex-grow: 3;
   }
 
-  /* Overlay */
   .rooms-row .shade {
     background: rgba(0, 0, 0, 0.5);
     transition: background 400ms ease;
@@ -112,7 +113,6 @@
     background: rgba(0, 0, 0, 0.35);
   }
 
-  /* Content wrapper (visible by default) */
   .rooms-row .inner {
     opacity: 1;
     transform: translateY(0);
@@ -122,7 +122,6 @@
       transform 700ms ease,
       visibility 0s linear 0s;
   }
-  /* Non-hovered hide (only when not open) */
   .rooms-row:not(.has-open):hover .card:not(:hover) .inner {
     opacity: 0;
     transform: translateY(20px);
@@ -133,7 +132,6 @@
       visibility 0s linear 400ms;
   }
 
-  /* Staggered children (only prep during hover, not open) */
   .rooms-row .inner h3,
   .rooms-row .inner p,
   .rooms-row .inner a.cta {
@@ -163,20 +161,24 @@
     transform: translateY(0);
   }
 
-  /* ===== Click-to-open state ===== */
+  /* ===== Click-to-open (overlay) ===== */
+  .rooms-row.has-open {
+    height: 100vh;
+  }
   .rooms-row.has-open .card {
     flex-basis: 0%;
     flex-grow: 0.0001;
   }
   .rooms-row.has-open:hover .card {
     flex-grow: 0.0001;
-  } /* disable hover growth */
+  }
 
-  /* hide divider lines when open (container uses divide-x divide-white) */
   .rooms-row.has-open > .card {
     border-color: transparent !important;
   }
-
+  .rooms-row.has-open .card:not(.is-open) {
+    visibility: hidden;
+  }
   .rooms-row.has-open .card:not(.is-open) .shade {
     background: rgba(0, 0, 0, 0.8);
   }
@@ -191,8 +193,14 @@
   }
 
   .rooms-row.has-open .card.is-open {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
     flex-basis: 100%;
     flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
   }
   .rooms-row.has-open .card.is-open .shade {
     background: rgba(0, 0, 0, 0.35);
@@ -206,8 +214,10 @@
       opacity 900ms ease,
       transform 900ms ease,
       visibility 0s linear 0s;
+    pointer-events: auto;
+    position: relative;
   }
-  /* Stagger on open */
+
   .rooms-row.has-open .card.is-open .inner h3 {
     transition-delay: 120ms;
     opacity: 1;
@@ -224,20 +234,31 @@
     transform: translateY(0);
   }
 
-  /* Optional: Prev/Next arrows (only if you add .room-nav + .nav-btn markup) */
+  .rooms-row .card .open-content {
+    display: none;
+  }
+  .rooms-row.has-open .card.is-open .open-content {
+    display: block;
+  }
+  .rooms-row.has-open .card.is-open .content-wrap {
+    min-height: 100%;
+    background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.55) 18%, rgba(0, 0, 0, 0.85) 40%);
+  }
+
+  /* nav overlay sits above */
   .room-nav {
-    position: absolute;
+    position: fixed;
     inset: 0;
     display: none;
     align-items: center;
     justify-content: space-between;
     padding: 0 12px;
     pointer-events: none;
+    z-index: 70;
   }
   .room-nav.is-visible {
     display: flex;
   }
-
   .nav-btn {
     background: transparent;
     border: 0;
@@ -246,6 +267,7 @@
     line-height: 0;
     color: #fff;
     cursor: pointer;
+    pointer-events: auto;
   }
   .nav-icon {
     width: 96px;
@@ -257,21 +279,12 @@
     pointer-events: none;
   }
 
-  .rooms-row,
-  .rooms-row * {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .rooms-row .card {
-    cursor: pointer;
-  }
   .rooms-row .card .close-btn,
   .rooms-row .card .cta,
   .room-nav .nav-btn {
     cursor: pointer;
   }
 
-  /* Reduce motion */
   @media (prefers-reduced-motion: reduce) {
     .rooms-row .card,
     .rooms-row .inner,
