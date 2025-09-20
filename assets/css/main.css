@@ -148,23 +148,24 @@
   .rooms-row:not(.has-open):hover .card:hover .inner h3 {
     transition-delay: 150ms;
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
   .rooms-row:not(.has-open):hover .card:hover .inner p {
     transition-delay: 300ms;
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
   .rooms-row:not(.has-open):hover .card:hover .inner a.cta {
     transition-delay: 600ms;
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 
   /* ===== Click-to-open (overlay) ===== */
   .rooms-row.has-open {
     height: 100vh;
   }
+
   .rooms-row.has-open .card {
     flex-basis: 0%;
     flex-grow: 0.0001;
@@ -176,6 +177,7 @@
   .rooms-row.has-open > .card {
     border-color: transparent !important;
   }
+
   .rooms-row.has-open .card:not(.is-open) {
     visibility: hidden;
   }
@@ -192,6 +194,7 @@
       visibility 0s linear 300ms;
   }
 
+  /* The open card becomes a full-screen fixed overlay */
   .rooms-row.has-open .card.is-open {
     position: fixed;
     inset: 0;
@@ -208,7 +211,7 @@
   }
   .rooms-row.has-open .card.is-open .inner {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
     visibility: visible;
     transition:
       opacity 900ms ease,
@@ -218,34 +221,38 @@
     position: relative;
   }
 
-  .rooms-row.has-open .card.is-open .inner h3 {
-    transition-delay: 120ms;
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .rooms-row.has-open .card.is-open .inner p {
-    transition-delay: 260ms;
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .rooms-row.has-open .card.is-open .inner a.cta {
-    transition-delay: 520ms;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
+  /* Open-content visibility */
   .rooms-row .card .open-content {
     display: none;
   }
   .rooms-row.has-open .card.is-open .open-content {
     display: block;
   }
+
+  /* Content layer sits ABOVE a subtle veil */
   .rooms-row.has-open .card.is-open .content-wrap {
+    position: relative; /* create stacking context for ::before */
     min-height: 100%;
-    background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.55) 18%, rgba(0, 0, 0, 0.85) 40%);
+    /* padding handled in markup with Tailwind (pt-*) */
+  }
+  .rooms-row.has-open .card.is-open .content-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0; /* veil UNDER the content */
+    pointer-events: none;
+    background:
+      radial-gradient(80% 40% at 50% -10%, rgba(0, 0, 0, 0.75), transparent 70%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 320px);
+    backdrop-filter: blur(0.5px);
+  }
+  /* make sure actual content sits above the veil */
+  .rooms-row.has-open .card.is-open .content-wrap > * {
+    position: relative;
+    z-index: 1;
   }
 
-  /* nav overlay sits above */
+  /* Nav overlay sits above everything */
   .room-nav {
     position: fixed;
     inset: 0;

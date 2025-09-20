@@ -740,25 +740,25 @@ body {
 .rooms-row:not(.has-open):hover .card:hover .inner h3 {
   transition-delay: 150ms;
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .rooms-row:not(.has-open):hover .card:hover .inner p {
   transition-delay: 300ms;
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .rooms-row:not(.has-open):hover .card:hover .inner a.cta {
   transition-delay: 600ms;
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .rooms-row:not(.has-open):hover .card:hover .inner a.\!cta {
   transition-delay: 600ms !important;
   opacity: 1 !important;
-  transform: translateY(0) !important;
+  transform: none !important;
 }
 
 /* ===== Click-to-open (overlay) ===== */
@@ -798,6 +798,8 @@ body {
       visibility 0s linear 300ms;
 }
 
+/* The open card becomes a full-screen fixed overlay */
+
 .rooms-row.has-open .card.is-open {
   position: fixed;
   inset: 0;
@@ -816,7 +818,7 @@ body {
 
 .rooms-row.has-open .card.is-open .inner {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
   visibility: visible;
   transition:
       opacity 900ms ease,
@@ -826,29 +828,7 @@ body {
   position: relative;
 }
 
-.rooms-row.has-open .card.is-open .inner h3 {
-  transition-delay: 120ms;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.rooms-row.has-open .card.is-open .inner p {
-  transition-delay: 260ms;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.rooms-row.has-open .card.is-open .inner a.cta {
-  transition-delay: 520ms;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.rooms-row.has-open .card.is-open .inner a.\!cta {
-  transition-delay: 520ms !important;
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
+/* Open-content visibility */
 
 .rooms-row .card .open-content {
   display: none;
@@ -858,12 +838,36 @@ body {
   display: block;
 }
 
+/* Content layer sits ABOVE a subtle veil */
+
 .rooms-row.has-open .card.is-open .content-wrap {
+  position: relative;
+  /* create stacking context for ::before */
   min-height: 100%;
-  background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.55) 18%, rgba(0, 0, 0, 0.85) 40%);
+  /* padding handled in markup with Tailwind (pt-*) */
 }
 
-/* nav overlay sits above */
+.rooms-row.has-open .card.is-open .content-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* veil UNDER the content */
+  pointer-events: none;
+  background:
+      radial-gradient(80% 40% at 50% -10%, rgba(0, 0, 0, 0.75), transparent 70%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 320px);
+  backdrop-filter: blur(0.5px);
+}
+
+/* make sure actual content sits above the veil */
+
+.rooms-row.has-open .card.is-open .content-wrap > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Nav overlay sits above everything */
 
 .room-nav {
   position: fixed;
@@ -1042,6 +1046,10 @@ body {
   margin-left: 1rem;
 }
 
+.mt-12 {
+  margin-top: 3rem;
+}
+
 .mt-3 {
   margin-top: 0.75rem;
 }
@@ -1098,20 +1106,12 @@ body {
   height: 2.5rem;
 }
 
-.h-12 {
-  height: 3rem;
-}
-
 .h-16 {
   height: 4rem;
 }
 
 .h-20 {
   height: 5rem;
-}
-
-.h-4 {
-  height: 1rem;
 }
 
 .h-40 {
@@ -1150,20 +1150,12 @@ body {
   width: 2.5rem;
 }
 
-.w-4 {
-  width: 1rem;
-}
-
 .w-5 {
   width: 1.25rem;
 }
 
 .w-6 {
   width: 1.5rem;
-}
-
-.w-8 {
-  width: 2rem;
 }
 
 .w-\[160px\] {
@@ -1180,6 +1172,10 @@ body {
 
 .w-full {
   width: 100%;
+}
+
+.max-w-4xl {
+  max-width: 56rem;
 }
 
 .max-w-5xl {
@@ -1280,6 +1276,10 @@ body {
   gap: 2.5rem;
 }
 
+.gap-12 {
+  gap: 3rem;
+}
+
 .gap-2 {
   gap: 0.5rem;
 }
@@ -1300,6 +1300,12 @@ body {
   gap: 2rem;
 }
 
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
 .space-y-10 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1312,6 +1318,12 @@ body {
   margin-bottom: calc(3rem * var(--tw-space-y-reverse));
 }
 
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1322,6 +1334,12 @@ body {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
+.space-y-5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
 }
 
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
@@ -1371,12 +1389,16 @@ body {
   border-radius: 9999px;
 }
 
-.rounded-md {
-  border-radius: 0.375rem;
-}
-
 .border {
   border-width: 1px;
+}
+
+.border-t {
+  border-top-width: 1px;
+}
+
+.border-white\/10 {
+  border-color: rgb(255 255 255 / 0.1);
 }
 
 .border-white\/15 {
@@ -1385,10 +1407,6 @@ body {
 
 .border-white\/20 {
   border-color: rgb(255 255 255 / 0.2);
-}
-
-.border-white\/60 {
-  border-color: rgb(255 255 255 / 0.6);
 }
 
 .bg-black {
@@ -1444,11 +1462,6 @@ body {
   padding-bottom: 4rem;
 }
 
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-
 .pb-10 {
   padding-bottom: 2.5rem;
 }
@@ -1457,8 +1470,16 @@ body {
   padding-bottom: 3rem;
 }
 
+.pt-2 {
+  padding-top: 0.5rem;
+}
+
 .pt-36 {
   padding-top: 9rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
 }
 
 .text-center {
@@ -1537,6 +1558,10 @@ body {
   text-transform: lowercase;
 }
 
+.not-italic {
+  font-style: normal;
+}
+
 .leading-relaxed {
   line-height: 1.625;
 }
@@ -1566,16 +1591,16 @@ body {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-.text-white\/80 {
-  color: rgb(255 255 255 / 0.8);
-}
-
 .text-white\/90 {
   color: rgb(255 255 255 / 0.9);
 }
 
 .underline {
   text-decoration-line: underline;
+}
+
+.decoration-white\/40 {
+  text-decoration-color: rgb(255 255 255 / 0.4);
 }
 
 .antialiased {
@@ -1774,13 +1799,12 @@ body {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.hover\:border-white:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
-}
-
 .hover\:bg-white\/\[0\.08\]:hover {
   background-color: rgb(255 255 255 / 0.08);
+}
+
+.hover\:decoration-white:hover {
+  text-decoration-color: #fff;
 }
 
 .hover\:opacity-100:hover {
@@ -1792,21 +1816,18 @@ body {
 }
 
 @media (min-width: 640px) {
-  .sm\:inline-block {
-    display: inline-block;
-  }
-
   .sm\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .sm\:gap-4 {
-    gap: 1rem;
   }
 
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .sm\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
@@ -1827,12 +1848,12 @@ body {
     display: none;
   }
 
-  .md\:h-12 {
-    height: 3rem;
+  .md\:h-10 {
+    height: 2.5rem;
   }
 
-  .md\:h-16 {
-    height: 4rem;
+  .md\:h-12 {
+    height: 3rem;
   }
 
   .md\:h-28 {
@@ -1847,21 +1868,28 @@ body {
     width: 3rem;
   }
 
+  .md\:w-auto {
+    width: auto;
+  }
+
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
   }
 
   .md\:gap-12 {
     gap: 3rem;
   }
 
-  .md\:gap-4 {
-    gap: 1rem;
+  .md\:gap-16 {
+    gap: 4rem;
   }
 
-  .md\:px-10 {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+  .md\:gap-4 {
+    gap: 1rem;
   }
 
   .md\:px-8 {
@@ -1878,6 +1906,10 @@ body {
     padding-top: 11rem;
   }
 
+  .md\:text-right {
+    text-align: right;
+  }
+
   .md\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
@@ -1886,11 +1918,6 @@ body {
   .md\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
-  }
-
-  .md\:text-4xl {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
   }
 
   .md\:text-5xl {
@@ -1903,9 +1930,9 @@ body {
     line-height: 1.5rem;
   }
 
-  .md\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
+  .md\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
 
