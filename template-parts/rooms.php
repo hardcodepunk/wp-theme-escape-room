@@ -67,8 +67,6 @@ foreach ($rooms as $i => $room) :
           <div class="content-wrap">
             <div class="mx-auto max-w-5xl px-6 md:px-8 pt-36 md:pt-44 pb-10 space-y-10">
 
-
-
               <section aria-label="<?php echo esc_attr($title . ' gallery'); ?>" class="space-y-6">
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                   <?php for ($g = 0; $g < 6; $g++) : ?>
