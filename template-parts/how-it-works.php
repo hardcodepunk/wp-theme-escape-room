@@ -18,61 +18,31 @@ if (! defined('ABSPATH')) {
     </header>
 
     <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 items-start">
-      <!-- 1 -->
-      <li class="group">
-        <div class="flex items-center gap-4">
-          <!-- icon -->
-          <svg class="shrink-0 h-10 w-10 md:h-12 md:w-12 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-            <rect x="3" y="4" width="18" height="14" rx="2"></rect>
-            <path d="M3 8h18M8 3v2M16 3v2"></path>
-            <path d="M7 12h6M7 15h10"></path>
-          </svg>
-          <h3 class="text-xl md:text-2xl font-light">Book your room online</h3>
-        </div>
+      <li>
+        <h3 class="text-xl md:text-2xl font-light">Book your room online</h3>
         <p class="mt-3 text-sm opacity-80">
           Pick a theme, select your time slot and pay securely to confirm your reservation.
         </p>
       </li>
 
-      <!-- 2 -->
-      <li class="group">
-        <div class="flex items-center gap-4">
-          <svg class="shrink-0 h-10 w-10 md:h-12 md:w-12 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-            <circle cx="12" cy="12" r="9"></circle>
-            <path d="M12 7v5l3 3"></path>
-          </svg>
-          <h3 class="text-xl md:text-2xl font-light">Arrive 10 minutes early</h3>
-        </div>
+      <li>
+        <h3 class="text-xl md:text-2xl font-light">Arrive 10 minutes early</h3>
         <p class="mt-3 text-sm opacity-80">
           Meet your game master, store belongings, and get a quick safety and rules briefing.
         </p>
       </li>
 
-      <!-- 3 -->
-      <li class="group">
-        <div class="flex items-center gap-4">
-          <svg class="shrink-0 h-10 w-10 md:h-12 md:w-12 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-            <path d="M4 8l8-4 8 4v8l-8 4-8-4V8z"></path>
-            <path d="M10 12h4M8 15h8"></path>
-          </svg>
-          <h3 class="text-xl md:text-2xl font-light">60 minutes to escape</h3>
-        </div>
+      <li>
+        <h3 class="text-xl md:text-2xl font-light">60 minutes to escape</h3>
         <p class="mt-3 text-sm opacity-80">
           Search for clues, solve puzzles, and unlock mechanisms. Hints are available if you get stuck.
         </p>
       </li>
 
-      <!-- 4 -->
-      <li class="group">
-        <div class="flex items-center gap-4">
-          <svg class="shrink-0 h-10 w-10 md:h-12 md:w-12 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-            <path d="M9 12l2 2 4-4"></path>
-            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-          </svg>
-          <h3 class="text-xl md:text-2xl font-light">Debrief & victory photo</h3>
-        </div>
+      <li>
+        <h3 class="text-xl md:text-2xl font-light">Debrief &amp; victory photo</h3>
         <p class="mt-3 text-sm opacity-80">
-          Celebrate your time, compare paths you didn’t see, and take a team photo to remember it.
+          Celebrate your time and take a team photo to remember it.
         </p>
       </li>
     </ol>
@@ -80,8 +50,8 @@ if (! defined('ABSPATH')) {
     <a
   href="#"
   data-scroll-target="#how-it-works"
-  class="cta relative group inline-block w-[160px] mt-4"
-  aria-label="<?php echo esc_attr('See how it works for ' . $room['title']); ?>"
+  class="cta relative group block w-[160px] mt-10 mx-auto"
+  aria-label="<?php echo esc_attr('Book now'); ?>"
 >
   <svg class="block w-full h-auto text-white" viewBox="0 0 420 260" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" vector-effect="non-scaling-stroke" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     <polygon points="40,40 260,140 260,240 40,140" />
@@ -96,19 +66,6 @@ if (! defined('ABSPATH')) {
     </span>
   </span>
 </a>
-
-  </div>
-
-  <!-- separators (desktop) -->
-  <div class="pointer-events-none absolute inset-x-0 top-[calc(50%+12px)] hidden lg:block">
-    <div class="mx-auto max-w-7xl px-6">
-      <div class="grid grid-cols-4 gap-10 md:gap-12">
-        <span></span>
-        <span class="h-px bg-white/40 self-center"></span>
-        <span class="h-px bg-white/40 self-center"></span>
-        <span></span>
-      </div>
-    </div>
   </div>
 </section>
 
