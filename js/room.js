@@ -47,28 +47,31 @@
 
   function updateNav() {
     if (!nav) return;
-    if (openIndex === -1) {
-      nav.classList.remove('is-visible');
-      [prevBtn, nextBtn].forEach((b) => {
-        if (!b) return;
-        b.hidden = true;
-        b.disabled = true;
-        b.setAttribute('aria-disabled', 'true');
-      });
+
+    const isOpen = openIndex !== -1;
+
+    nav.style.display = isOpen ? 'block' : 'none';
+
+    const disableAll = (btn) => {
+      if (!btn) return;
+      btn.disabled = true;
+      btn.setAttribute('aria-disabled', 'true');
+    };
+
+    if (!isOpen) {
+      disableAll(prevBtn);
+      disableAll(nextBtn);
       return;
     }
-    nav.classList.add('is-visible');
 
     const atStart = openIndex <= 0;
     const atEnd = openIndex >= lastIdx;
 
     if (prevBtn) {
-      prevBtn.hidden = atStart;
       prevBtn.disabled = atStart;
       prevBtn.setAttribute('aria-disabled', String(atStart));
     }
     if (nextBtn) {
-      nextBtn.hidden = atEnd;
       nextBtn.disabled = atEnd;
       nextBtn.setAttribute('aria-disabled', String(atEnd));
     }

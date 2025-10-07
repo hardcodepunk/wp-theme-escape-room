@@ -868,28 +868,21 @@ body {
     );
 }
 
-/* Nav overlay sits above everything */
-
 .room-nav {
   position: fixed;
   inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
+  display: block;
   pointer-events: none;
   z-index: 70;
 }
 
-.room-nav.is-visible {
-  display: flex;
-}
-
 .nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   background: transparent;
   border: 0;
   padding: 10px;
-  margin: 0;
   line-height: 0;
   color: #fff;
   cursor: pointer;
@@ -902,7 +895,15 @@ body {
   display: block;
 }
 
-.nav-btn[disabled] {
+.nav-btn.prev {
+  left: 12px;
+}
+
+.nav-btn.next {
+  right: 12px;
+}
+
+.nav-btn[aria-disabled='true'] {
   opacity: 0;
   pointer-events: none;
 }
