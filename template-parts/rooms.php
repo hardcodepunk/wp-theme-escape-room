@@ -43,7 +43,7 @@ foreach ($rooms as $i => $room) :
 
         <div class="shade absolute inset-0" data-action="close" aria-hidden="true"></div>
 
-        <div class="inner absolute inset-0 flex flex-col items-center justify-end text-center text-white space-y-4 px-6 pb-12">
+        <div class="inner absolute inset-0 flex flex-col items-center justify-end text-center text-white space-y-4 px-6 pb-12 max-w-[300px] mx-auto">
           <h3 class="text-2xl font-bold uppercase"><?php echo esc_html($title); ?></h3>
           <?php if ($desc) : ?><p class="text-sm opacity-80"><?php echo esc_html($desc); ?></p><?php endif; ?>
           <button type="button" class="cta relative group inline-block w-[160px] mt-4"
