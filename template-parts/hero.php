@@ -61,7 +61,7 @@
 
     <!-- Text overlay -->
     <span class="absolute inset-0 translate-x-[-8%] translate-y-[4%] flex items-center justify-center pointer-events-none">
-      <span class="inline-block [transform:skew(1deg,25deg)] text-white font-light tracking-[0.30em] text-[12px] uppercase">
+      <span class="inline-block [transform:skew(1deg,25deg)] text-white tracking-[0.30em] text-[12px] uppercase">
         Let me in
       </span>
     </span>

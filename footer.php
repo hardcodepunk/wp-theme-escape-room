@@ -10,29 +10,29 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 text-center">
 
       <div class="space-y-3">
-        <h2 class="text-2xl font-thin uppercase tracking-wider">Let Me Out Brussels</h2>
+        <h2 class="text-2xl  uppercase tracking-wider">Let Me Out Brussels</h2>
         <address class="not-italic space-y-1">
-          <p class="font-light">Place de la Liberté – 3 – Vrijheidsplaats</p>
-          <p class="font-light">1000 Brussels</p>
-          <p class="font-light">Belgique</p>
+          <p class="font-thin">Place de la Liberté – 3 – Vrijheidsplaats</p>
+          <p class="font-thin">1000 Brussels</p>
+          <p class="font-thin">Belgique</p>
         </address>
         <div class="pt-4 space-y-1">
-          <p class="uppercase tracking-wide font-light">Sleutelbeen SPRL</p>
-          <p class="font-light">VAT: BE 630 977 575</p>
-          <p class="font-light">RPR RPM Bruxelles</p>
+          <p class="uppercase tracking-wide font-thin">Sleutelbeen SPRL</p>
+          <p class="font-thin">VAT: BE 630 977 575</p>
+          <p class="font-thin">RPR RPM Bruxelles</p>
         </div>
       </div>
 
       <div class="space-y-5">
-        <h3 class="text-xl font-thin uppercase tracking-wider">Office</h3>
+        <h3 class="text-xl  uppercase tracking-wider">Office</h3>
         <div class="space-y-2 text-base">
-          <p class="font-light">
+          <p class="font-thin">
             <span class="opacity-70">e-mail:</span>
             <a href="mailto:contact@letmeout.be" class="underline decoration-white/40 hover:decoration-white">
               contact@letmeout.be
             </a>
           </p>
-          <p class="font-light">
+          <p class="font-thin">
             <span class="opacity-70">tel:</span>
             <a href="tel:+32483719596" class="underline decoration-white/40 hover:decoration-white">
               +32 483 71 95 96
@@ -74,8 +74,8 @@
 
       <div class="space-y-5">
         <div class="space-y-2">
-          <h3 class="text-xl font-thin uppercase tracking-wider">Company</h3>
-          <a href="<?php echo esc_url(home_url('/terms')); ?>" class="inline-block underline decoration-white/40 hover:decoration-white font-light">
+          <h3 class="text-xl  uppercase tracking-wider">Company</h3>
+          <a href="<?php echo esc_url(home_url('/terms')); ?>" class="inline-block underline decoration-white/40 hover:decoration-white font-thin">
             terms &amp; conditions
           </a>
         </div>
@@ -94,7 +94,7 @@
           decoding="async"
         />
       </a>
-      <p class="font-light text-center md:text-right w-full md:w-auto">
+      <p class="font-thin text-center md:text-right w-full md:w-auto">
         &copy; <?php echo date('Y'); ?> Let Me Out Brussels — All rights reserved.
       </p>
     </div>

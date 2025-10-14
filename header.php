@@ -17,7 +17,7 @@
 
    <!-- Left chunk -->
     <div data-chunk
-        class="hidden md:flex items-center gap-4 text-xs uppercase font-light tracking-wide
+        class="hidden md:flex items-center gap-4 text-xs uppercase  tracking-wide
                 transition-all duration-300 ease-out">
       <span class="flex items-center gap-4 opacity-80">
         <a href="#" class="hover:opacity-100">EN</a><span>•</span>
@@ -48,7 +48,7 @@
         wp_nav_menu([
           'theme_location' => 'primary',
           'container'      => false,
-          'menu_class'     => 'flex items-center gap-8 text-sm font-light tracking-wide uppercase',
+          'menu_class'     => 'flex items-center gap-8 text-sm  tracking-wide uppercase',
           'fallback_cb'    => false,
         ]);
 ?>

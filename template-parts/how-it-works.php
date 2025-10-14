@@ -19,28 +19,28 @@ if (! defined('ABSPATH')) {
 
     <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 items-start">
       <li>
-        <h3 class="text-xl md:text-2xl font-light">Book your room online</h3>
+        <h3 class="text-xl md:text-2xl ">Book your room online</h3>
         <p class="mt-3 text-sm opacity-80">
           Pick a theme, select your time slot and pay securely to confirm your reservation.
         </p>
       </li>
 
       <li>
-        <h3 class="text-xl md:text-2xl font-light">Arrive 10 minutes early</h3>
+        <h3 class="text-xl md:text-2xl ">Arrive 10 minutes early</h3>
         <p class="mt-3 text-sm opacity-80">
           Meet your game master, store belongings, and get a quick safety and rules briefing.
         </p>
       </li>
 
       <li>
-        <h3 class="text-xl md:text-2xl font-light">60 minutes to escape</h3>
+        <h3 class="text-xl md:text-2xl ">60 minutes to escape</h3>
         <p class="mt-3 text-sm opacity-80">
           Search for clues, solve puzzles, and unlock mechanisms. Hints are available if you get stuck.
         </p>
       </li>
 
       <li>
-        <h3 class="text-xl md:text-2xl font-light">Debrief &amp; victory photo</h3>
+        <h3 class="text-xl md:text-2xl ">Debrief &amp; victory photo</h3>
         <p class="mt-3 text-sm opacity-80">
           Celebrate your time and take a team photo to remember it.
         </p>
@@ -61,7 +61,7 @@ if (! defined('ABSPATH')) {
         <line x1="260" y1="240" x2="340" y2="200" />
       </svg>
       <span class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-[-14%] translate-y-[4%]">
-        <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white font-light tracking-[0.30em] text-[10px] uppercase">
+        <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white tracking-[0.30em] text-[10px] uppercase">
           Book now
         </span>
       </span>

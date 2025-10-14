@@ -81,7 +81,7 @@ if ($rooms_q->have_posts()) :
 
   <!-- Label -->
   <span class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-[-14%] translate-y-[4%]">
-    <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white font-light tracking-[0.30em] text-[10px] uppercase">
+    <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white tracking-[0.30em] text-[10px] uppercase">
       Enter
     </span>
   </span>
@@ -133,7 +133,7 @@ if ($rooms_q->have_posts()) :
                     <line x1="260" y1="240" x2="340" y2="200" />
                   </svg>
                   <span class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-[-14%] translate-y-[4%]">
-                    <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white font-light tracking-[0.30em] text-[10px] uppercase">
+                    <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white tracking-[0.30em] text-[10px] uppercase">
                       Book now
                     </span>
                   </span>
