@@ -48,24 +48,24 @@ if (! defined('ABSPATH')) {
     </ol>
 
     <a
-  href="#"
-  data-scroll-target="#how-it-works"
-  class="cta relative group block w-[160px] mt-10 mx-auto"
-  aria-label="<?php echo esc_attr('Book now'); ?>"
->
-  <svg class="block w-full h-auto text-white" viewBox="0 0 420 260" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" vector-effect="non-scaling-stroke" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-    <polygon points="40,40 260,140 260,240 40,140" />
-    <polyline points="120,0 340,100 340,200" />
-    <line x1="40" y1="40" x2="120" y2="0" />
-    <line x1="260" y1="140" x2="340" y2="100" />
-    <line x1="260" y1="240" x2="340" y2="200" />
-  </svg>
-  <span class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-[-14%] translate-y-[4%]">
-    <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white font-light tracking-[0.30em] text-[10px] uppercase">
-      Book now
-    </span>
-  </span>
-</a>
+      href="#"
+      data-scroll-target="#how-it-works"
+      class="cta relative group block w-[160px] mt-10 mx-auto"
+      aria-label="<?php echo esc_attr('Book now'); ?>"
+    >
+      <svg class="block w-full h-auto text-white" viewBox="0 0 420 260" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" vector-effect="non-scaling-stroke" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <polygon points="40,40 260,140 260,240 40,140" />
+        <polyline points="120,0 340,100 340,200" />
+        <line x1="40" y1="40" x2="120" y2="0" />
+        <line x1="260" y1="140" x2="340" y2="100" />
+        <line x1="260" y1="240" x2="340" y2="200" />
+      </svg>
+      <span class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-[-14%] translate-y-[4%]">
+        <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white font-light tracking-[0.30em] text-[10px] uppercase">
+          Book now
+        </span>
+      </span>
+    </a>
   </div>
 </section>
 
