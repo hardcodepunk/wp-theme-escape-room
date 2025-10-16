@@ -47,11 +47,11 @@ if ($rooms_q->have_posts()) :
             <h3 class="text-2xl font-bold uppercase"><?php echo esc_html($title); ?></h3>
 
             <?php if (! empty($desc)) : ?>
-              <p class="text-sm opacity-80"><?php echo esc_html(wp_strip_all_tags($desc)); ?></p>
+              <p class="room-short-description text-sm opacity-80"><?php echo esc_html(wp_strip_all_tags($desc)); ?></p>
             <?php endif; ?>
 
             <button type="button"
-  class="cta relative group inline-block w-[160px] mt-4"
+  class="cta room-toggle-btn relative group inline-block w-[160px] mt-4"
   data-action="open" aria-expanded="false"
   aria-label="<?php echo esc_attr(sprintf(__('Enter %s', 'escape-room'), $title)); ?>">
 
@@ -59,17 +59,12 @@ if ($rooms_q->have_posts()) :
        viewBox="0 0 420 260" preserveAspectRatio="xMidYMid meet"
        aria-hidden="true">
 
-    <!-- 1) Face fills (inside the box only) -->
     <g fill="#000" stroke="none">
-      <!-- Front face -->
       <polygon points="40,40 260,140 260,240 40,140"/>
-      <!-- Top face -->
       <polygon points="120,0 340,100 260,140 40,40"/>
-      <!-- Right face -->
       <polygon points="260,140 340,100 340,200 260,240"/>
     </g>
 
-    <!-- 2) Wireframe outline on top -->
     <g fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" vector-effect="non-scaling-stroke">
       <polygon points="40,40 260,140 260,240 40,140" />
       <polyline points="120,0 340,100 340,200" />
@@ -79,7 +74,6 @@ if ($rooms_q->have_posts()) :
     </g>
   </svg>
 
-  <!-- Label -->
   <span class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-[-14%] translate-y-[4%]">
     <span class="cta-label inline-block [transform:skew(1deg,25deg)] text-white tracking-[0.30em] text-[10px] uppercase">
       Enter
@@ -93,7 +87,6 @@ if ($rooms_q->have_posts()) :
             <div class="content-wrap">
               <div class="mx-auto max-w-5xl px-6 md:px-8 pt-36 md:pt-44 pb-10 space-y-10">
 
-                <!-- Gallery (placeholder uses featured image 6x; swap to SCF gallery later if you add one) -->
                 <section aria-label="<?php echo esc_attr($title . ' gallery'); ?>" class="space-y-6">
                   <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                     <?php for ($g = 0; $g < 6; $g++) : ?>
