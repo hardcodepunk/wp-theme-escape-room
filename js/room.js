@@ -49,7 +49,6 @@
     if (!nav) return;
 
     const isOpen = openIndex !== -1;
-
     nav.style.display = isOpen ? 'block' : 'none';
 
     const disableAll = (btn) => {
@@ -101,7 +100,7 @@
   // — Open / Close
   function openCardByIndex(idx) {
     if (idx < 0 || idx > lastIdx) return;
-    if (openIndex === idx && row.classList.contains('has-open')) return; // already open
+    if (openIndex === idx && row.classList.contains('has-open')) return;
 
     const card = cards[idx];
     const prev = row.querySelector('.card.is-open');
@@ -189,9 +188,10 @@
   if (prevBtn) prevBtn.addEventListener('click', () => cycle(-1));
   if (nextBtn) nextBtn.addEventListener('click', () => cycle(1));
 
-  // — Keyboard
+  // — Keyboard (room popup)
   document.addEventListener('keydown', (e) => {
     if (!row.classList.contains('has-open')) return;
+    if (gallery.overlay && gallery.overlay.classList.contains('is-visible')) return; // gallery takes priority
     if (e.key === 'Escape') {
       e.preventDefault();
       closeOpenCard();
@@ -204,7 +204,7 @@
     }
   });
 
-  // — Touch swipe to navigate
+  // — Touch swipe to navigate (room popup)
   let touchStartX = 0,
     touchStartY = 0,
     swiping = false;
@@ -230,10 +230,7 @@
       const t = e.changedTouches[0];
       const dx = Math.abs(t.clientX - touchStartX);
       const dy = Math.abs(t.clientY - touchStartY);
-      if (dy > SWIPE_MAX_Y && dx < SWIPE_MIN_X) {
-        // vertical scroll — cancel swipe
-        swiping = false;
-      }
+      if (dy > SWIPE_MAX_Y && dx < SWIPE_MIN_X) swiping = false;
     },
     { passive: true }
   );
@@ -250,12 +247,213 @@
       const dy = Math.abs(t.clientY - touchStartY);
       if (dy > SWIPE_MAX_Y) return;
 
-      if (dx <= -SWIPE_MIN_X)
-        cycle(1); // swipe left -> next
-      else if (dx >= SWIPE_MIN_X) cycle(-1); // swipe right -> prev
+      if (dx <= -SWIPE_MIN_X) cycle(1);
+      else if (dx >= SWIPE_MIN_X) cycle(-1);
     },
     { passive: true }
   );
+
+  // ===== Gallery state
+  const gallery = {
+    overlay: document.querySelector('.gallery-overlay'),
+    img: null,
+    caption: null,
+    prev: null,
+    next: null,
+    close: null,
+    images: [], // array of {src, alt}
+    index: 0,
+  };
+
+  if (gallery.overlay) {
+    gallery.overlay.setAttribute('role', 'dialog');
+    gallery.overlay.setAttribute('aria-modal', 'true');
+    gallery.overlay.setAttribute('aria-hidden', 'true');
+
+    gallery.img = gallery.overlay.querySelector('.gallery-img');
+    gallery.caption = gallery.overlay.querySelector('.gallery-caption');
+    gallery.prev = gallery.overlay.querySelector('.gallery-nav.prev');
+    gallery.next = gallery.overlay.querySelector('.gallery-nav.next');
+    gallery.close = gallery.overlay.querySelector('.gallery-close');
+
+    if (gallery.img) gallery.img.setAttribute('draggable', 'false');
+  }
+
+  function renderGalleryFrame() {
+    const item = gallery.images[gallery.index];
+    if (!item) return;
+    gallery.img.setAttribute('src', item.src);
+    gallery.img.setAttribute('alt', item.alt);
+    gallery.caption.textContent = item.alt;
+  }
+
+  function updateGalleryNav() {
+    const atStart = gallery.index <= 0;
+    const atEnd = gallery.index >= gallery.images.length - 1;
+    if (gallery.prev) {
+      gallery.prev.disabled = atStart;
+      gallery.prev.setAttribute('aria-disabled', String(atStart));
+    }
+    if (gallery.next) {
+      gallery.next.disabled = atEnd;
+      gallery.next.setAttribute('aria-disabled', String(atEnd));
+    }
+  }
+
+  function preload(idx) {
+    const it = gallery.images[idx];
+    if (!it) return;
+    const im = new Image();
+    im.src = it.src;
+  }
+
+  function openGalleryFromCard(card, startIndex) {
+    if (!gallery.overlay) return;
+
+    // collect images from the *open* card's gallery
+    const thumbs = Array.from(card.querySelectorAll('.room-gallery-img'));
+    gallery.images = thumbs.map((el) => ({
+      src: el.getAttribute('src'),
+      alt: el.getAttribute('alt') || '',
+    }));
+
+    if (!gallery.images.length) return;
+
+    gallery.index = Math.max(0, Math.min(startIndex || 0, gallery.images.length - 1));
+    renderGalleryFrame();
+    updateGalleryNav();
+    preload(gallery.index + 1);
+    preload(gallery.index - 1);
+
+    gallery.overlay.classList.add('is-visible');
+    gallery.overlay.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeGallery() {
+    if (!gallery.overlay) return;
+    gallery.overlay.classList.remove('is-visible');
+    gallery.overlay.setAttribute('aria-hidden', 'true');
+    gallery.images = [];
+    gallery.index = 0;
+  }
+
+  function galleryCycle(delta) {
+    if (!gallery.images.length) return;
+    const nextIdx = Math.min(gallery.images.length - 1, Math.max(0, gallery.index + delta));
+    if (nextIdx !== gallery.index) {
+      gallery.index = nextIdx;
+      renderGalleryFrame();
+      updateGalleryNav();
+      preload(gallery.index + 1);
+      preload(gallery.index - 1);
+    }
+  }
+
+  // Clicks inside rows: open gallery if clicking a gallery img while room is open
+  row.addEventListener('click', (e) => {
+    if (!row.classList.contains('has-open')) return;
+    const openCard = row.querySelector('.card.is-open');
+    if (!openCard) return;
+
+    const opener = e.target.closest('[data-action="open-gallery"]');
+    if (opener) {
+      e.preventDefault();
+      const idx = parseInt(opener.getAttribute('data-gindex') || '0', 10);
+      openGalleryFromCard(openCard, idx);
+    }
+  });
+
+  // Gallery controls
+  if (gallery.prev) gallery.prev.addEventListener('click', () => galleryCycle(-1));
+  if (gallery.next) gallery.next.addEventListener('click', () => galleryCycle(1));
+  if (gallery.close) gallery.close.addEventListener('click', closeGallery);
+
+  // Close by background click
+  if (gallery.overlay) {
+    gallery.overlay.addEventListener('click', (e) => {
+      // avoid closing when clicking image or arrows
+      if (e.target.closest('.gallery-stage, .gallery-nav')) return;
+      closeGallery();
+    });
+  }
+
+  // Keyboard for gallery (when visible)
+  document.addEventListener('keydown', (e) => {
+    if (!gallery.overlay || !gallery.overlay.classList.contains('is-visible')) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeGallery();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      galleryCycle(-1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      galleryCycle(1);
+    }
+  });
+
+  // Touch swipe for gallery
+  let gStartX = 0,
+    gStartY = 0,
+    gSwiping = false;
+  const G_SWIPE_MIN_X = 40,
+    G_SWIPE_MAX_Y = 30;
+
+  if (gallery.overlay) {
+    gallery.overlay.addEventListener(
+      'touchstart',
+      (e) => {
+        if (!gallery.overlay.classList.contains('is-visible')) return;
+        const t = e.changedTouches[0];
+        gStartX = t.clientX;
+        gStartY = t.clientY;
+        gSwiping = true;
+      },
+      { passive: true }
+    );
+
+    gallery.overlay.addEventListener(
+      'touchmove',
+      (e) => {
+        if (!gSwiping) return;
+        const t = e.changedTouches[0];
+        const dx = Math.abs(t.clientX - gStartX);
+        const dy = Math.abs(t.clientY - gStartY);
+        if (dy > G_SWIPE_MAX_Y && dx < G_SWIPE_MIN_X) gSwiping = false;
+      },
+      { passive: true }
+    );
+
+    gallery.overlay.addEventListener(
+      'touchend',
+      (e) => {
+        if (!gSwiping) return;
+        gSwiping = false;
+        if (!gallery.overlay.classList.contains('is-visible')) return;
+
+        const t = e.changedTouches[0];
+        const dx = t.clientX - gStartX;
+        const dy = Math.abs(t.clientY - gStartY);
+        if (dy > G_SWIPE_MAX_Y) return;
+
+        if (dx <= -G_SWIPE_MIN_X)
+          galleryCycle(1); // left swipe -> next
+        else if (dx >= G_SWIPE_MIN_X) galleryCycle(-1); // right swipe -> prev
+      },
+      { passive: true }
+    );
+  }
+
+  // When closing the room popup, also ensure gallery is closed (safe wrap)
+  if (typeof closeOpenCard === 'function') {
+    const origCloseOpenCard = closeOpenCard;
+    closeOpenCard = function () {
+      if (gallery.overlay && gallery.overlay.classList.contains('is-visible')) {
+        closeGallery();
+      }
+      origCloseOpenCard();
+    };
+  }
 
   // — Init
   resetAllCtas();

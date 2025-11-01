@@ -89,16 +89,18 @@ if ($rooms_q->have_posts()) :
 
                 <section aria-label="<?php echo esc_attr($title . ' gallery'); ?>" class="space-y-6">
                   <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-                    <?php for ($g = 0; $g < 6; $g++) : ?>
-                      <figure class="overflow-hidden">
-                        <img
-                          src="<?php echo esc_url($img_url); ?>"
-                          alt="<?php echo esc_attr($title . ' photo ' . ($g + 1)); ?>"
-                          class="w-full h-40 md:h-48 object-cover transition-transform duration-500 ease-out hover:scale-[1.03]"
-                          loading="lazy" decoding="async"
-                        />
-                      </figure>
-                    <?php endfor; ?>
+                   <?php for ($g = 0; $g < 6; $g++) : ?>
+                    <figure class="overflow-hidden">
+                      <img
+                        src="<?php echo esc_url($img_url); ?>"
+                        alt="<?php echo esc_attr($title . ' photo ' . ($g + 1)); ?>"
+                        class="room-gallery-img w-full h-40 md:h-48 object-cover transition-transform duration-500 ease-out hover:scale-[1.03]"
+                        data-action="open-gallery"
+                        data-gindex="<?php echo esc_attr($g); ?>"
+                        loading="lazy" decoding="async"
+                      />
+                    </figure>
+                  <?php endfor; ?>
                   </div>
                 </section>
 
@@ -172,4 +174,41 @@ endif;
       </svg>
     </button>
   </div>
+  <!-- Fullscreen Gallery Overlay -->
+<div class="gallery-overlay" aria-hidden="true">
+  <button type="button" class="gallery-close" aria-label="Close gallery">
+    <span class="sr-only">Close</span>
+    &times;
+  </button>
+
+  <button type="button" class="gallery-nav prev" aria-label="Previous image">
+    <svg class="nav-icon" viewBox="0 0 100 100" aria-hidden="true">
+      <g transform="rotate(-90 50 50)" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="50" y1="18" x2="30" y2="78"/>
+        <line x1="50" y1="18" x2="70" y2="78"/>
+        <line x1="50" y1="18" x2="50" y2="82"/>
+        <line x1="30" y1="78" x2="50" y2="82"/>
+        <line x1="70" y1="78" x2="50" y2="82"/>
+      </g>
+    </svg>
+  </button>
+
+  <figure class="gallery-stage">
+    <img class="gallery-img" src="" alt="" />
+    <figcaption class="gallery-caption"></figcaption>
+  </figure>
+
+  <button type="button" class="gallery-nav next" aria-label="Next image">
+    <svg class="nav-icon" viewBox="0 0 100 100" aria-hidden="true">
+      <g transform="rotate(90 50 50)" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="50" y1="18" x2="30" y2="78"/>
+        <line x1="50" y1="18" x2="70" y2="78"/>
+        <line x1="50" y1="18" x2="50" y2="82"/>
+        <line x1="30" y1="78" x2="50" y2="82"/>
+        <line x1="70" y1="78" x2="50" y2="82"/>
+      </g>
+    </svg>
+  </button>
+</div>
+
 </section>
